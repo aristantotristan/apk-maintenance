@@ -8,7 +8,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="AKG Maintenance">
     
-    <!-- Link Logo GitHub Raw -->
     <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/processEngineering/Preventive_maintenance/main/logo%20akg.png">
     <link rel="manifest" href="manifest.json">
     
@@ -250,13 +249,10 @@
     </style>
 </head>
 <body>
-    <!-- LOGIN CONTAINER -->
     <div class="login-container">
         
-        <!-- KARTU LOGIN -->
         <div class="login-card">
             
-            <!-- LOGO DI DALAM KARTU (AESTHETIC) -->
             <div class="card-logo-container">
                 <img src="https://raw.githubusercontent.com/processEngineering/Preventive_maintenance/main/logo%20akg.png" 
                      alt="AKG" 
@@ -311,7 +307,6 @@
             try {
                 const { data: { session } } = await client.auth.getSession();
                 if (session) {
-                    // Cek jabatan dulu sebelum redirect
                     cekJabatanDanRedirect(session.user.id);
                 }
             } catch (err) {
@@ -320,7 +315,7 @@
         }
         cekSesi();
 
-        // --- LOGIC BARU: CEK JABATAN & REDIRECT ---
+        // --- REVISI LOGIC: CEK JABATAN & REDIRECT ---
         async function cekJabatanDanRedirect(userId) {
             try {
                 const { data: profile, error } = await client
@@ -335,14 +330,38 @@
                     return;
                 }
 
-                const jabatan = profile.jabatan;
-                console.log("Jabatan User:", jabatan);
+                // Ambil jabatan dan ubah ke huruf kecil semua agar pencocokan lebih aman
+                const jabatan = (profile.jabatan || '').toLowerCase().trim();
+                console.log("Jabatan terdeteksi:", jabatan);
 
-                // ATURAN REDIRECT KHUSUS JUNIOR MANAGER
-                if (jabatan === 'JUNIOR MANAGER PRODUKSI' || jabatan === 'JUNIOR MANAGER PPC') {
-                    window.location.href = 'Jpdo.html';
+                // --- ATURAN REDIRECT BARU ---
+                
+                // 1. Operator atau Pelaksana
+                if (jabatan === 'operator' || jabatan === 'pelaksana') {
+                    window.location.href = 'OPERATOR_HOME.html';
+                
+                // 2. Koordinator (Mengarah ke Supervisor Home)
+                } else if (jabatan === 'koordinator') {
+                    window.location.href = 'SUPERVISOR_HOME.html';
+                
+                // 3. Superintendent
+                } else if (jabatan === 'superintendent') {
+                    window.location.href = 'SUPERINTENDENT_HOME.html';
+                
+                // 4. Junior Manager Produksi
+                } else if (jabatan === 'junior manager produksi') {
+                    window.location.href = 'JUNIOR_MANAGER_PRODUKSI_HOME.html';
+                
+                // 5. Junior Manager PPIC
+                } else if (jabatan === 'junior manager ppic') {
+                    window.location.href = 'JUNIOR_MANAGER_PPIC_HOME.html';
+                
+                // 6. Manager
+                } else if (jabatan === 'manager') {
+                    window.location.href = 'MANAGER_HOME.html';
+                
+                // Default / Jabatan Lainnya (Misal: Admin, Engineering, dll)
                 } else {
-                    // Jabatan lain (Admin, Operator, dll) ke Home Biasa
                     window.location.href = 'home_akg.html';
                 }
 
@@ -370,7 +389,7 @@
                 return;
             }
 
-            btn.innerText = "sedang diproses";
+            btn.innerText = "sedang diproses...";
             btn.disabled = true;
 
             try {
