@@ -315,7 +315,7 @@
         }
         cekSesi();
 
-        // --- REVISI LOGIC: CEK JABATAN & REDIRECT ---
+        // --- REVISI LOGIC: HAPUS HOME_AKG ---
         async function cekJabatanDanRedirect(userId) {
             try {
                 const { data: profile, error } = await client
@@ -325,8 +325,8 @@
                     .single();
 
                 if (error || !profile) {
-                    console.warn("Profil tidak ditemukan, redirect ke home default.");
-                    window.location.href = 'home_akg.html';
+                    tampilkanPesan("Profil tidak ditemukan. Hubungi Admin.", "error");
+                    // Jangan redirect ke home_akg.html karena sudah dihapus
                     return;
                 }
 
@@ -340,7 +340,7 @@
                 if (jabatan === 'operator' || jabatan === 'pelaksana') {
                     window.location.href = 'OPERATOR_HOME.html';
                 
-                // 2. Koordinator (Mengarah ke Supervisor Home)
+                // 2. Koordinator
                 } else if (jabatan === 'koordinator') {
                     window.location.href = 'SUPERVISOR_HOME.html';
                 
@@ -360,14 +360,15 @@
                 } else if (jabatan === 'manager') {
                     window.location.href = 'MANAGER_HOME.html';
                 
-                // Default / Jabatan Lainnya (Misal: Admin, Engineering, dll)
+                // JIKA JABATAN TIDAK DIKENALI / TYPO
                 } else {
-                    window.location.href = 'home_akg.html';
+                    tampilkanPesan("Akses Ditolak: Jabatan '" + jabatan + "' tidak dikenali.", "error");
+                    client.auth.signOut(); // Logout otomatis biar aman
                 }
 
             } catch (e) {
                 console.error("Gagal cek jabatan:", e);
-                window.location.href = 'home_akg.html'; // Fallback aman
+                tampilkanPesan("Terjadi kesalahan sistem saat mengecek jabatan.", "error");
             }
         }
 
@@ -406,7 +407,7 @@
                     throw error;
                 }
 
-                tampilkanPesan("Login Berhasil!", "success");
+                tampilkanPesan("Login Berhasil! Mengarahkan...", "success");
                 
                 // 2. CEK JABATAN & REDIRECT
                 if (data.user) {
