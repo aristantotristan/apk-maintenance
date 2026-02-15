@@ -8,6 +8,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="AKG Maintenance">
     
+    <!-- Link Logo GitHub Raw -->
     <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/processEngineering/Preventive_maintenance/main/logo%20akg.png">
     <link rel="manifest" href="manifest.json">
     
@@ -249,10 +250,13 @@
     </style>
 </head>
 <body>
+    <!-- LOGIN CONTAINER -->
     <div class="login-container">
         
+        <!-- KARTU LOGIN -->
         <div class="login-card">
             
+            <!-- LOGO DI DALAM KARTU (AESTHETIC) -->
             <div class="card-logo-container">
                 <img src="https://raw.githubusercontent.com/processEngineering/Preventive_maintenance/main/logo%20akg.png" 
                      alt="AKG" 
@@ -315,7 +319,7 @@
         }
         cekSesi();
 
-        // --- REVISI LOGIC: HAPUS HOME_AKG ---
+        // --- REVISI LOGIC SESUAI VALUE OPTION ---
         async function cekJabatanDanRedirect(userId) {
             try {
                 const { data: profile, error } = await client
@@ -326,49 +330,52 @@
 
                 if (error || !profile) {
                     tampilkanPesan("Profil tidak ditemukan. Hubungi Admin.", "error");
-                    // Jangan redirect ke home_akg.html karena sudah dihapus
                     return;
                 }
 
-                // Ambil jabatan dan ubah ke huruf kecil semua agar pencocokan lebih aman
-                const jabatan = (profile.jabatan || '').toLowerCase().trim();
-                console.log("Jabatan terdeteksi:", jabatan);
+                // Ubah ke HURUF BESAR & Trim spasi agar cocok persis dengan value OPTION
+                const jabatan = (profile.jabatan || '').toUpperCase().trim();
+                console.log("Jabatan User (Database):", jabatan);
 
-                // --- ATURAN REDIRECT BARU ---
+                // --- ATURAN REDIRECT (STRING MATCHING) ---
                 
-                // 1. Operator atau Pelaksana
-                if (jabatan === 'operator' || jabatan === 'pelaksana') {
+                // 1. OPERATOR | PELAKSANA
+                if (jabatan === 'OPERATOR | PELAKSANA') {
                     window.location.href = 'OPERATOR_HOME.html';
                 
-                // 2. Koordinator
-                } else if (jabatan === 'koordinator') {
+                // 2. SUPERVISOR | KOORDINATOR
+                } else if (jabatan === 'SUPERVISOR | KOORDINATOR') {
                     window.location.href = 'SUPERVISOR_HOME.html';
                 
-                // 3. Superintendent
-                } else if (jabatan === 'superintendent') {
+                // 3. SUPERINTENDENT
+                } else if (jabatan === 'SUPERINTENDENT') {
                     window.location.href = 'SUPERINTENDENT_HOME.html';
                 
-                // 4. Junior Manager Produksi
-                } else if (jabatan === 'junior manager produksi') {
+                // 4. JUNIOR MANAGER PRODUKSI
+                } else if (jabatan === 'JUNIOR MANAGER PRODUKSI') {
                     window.location.href = 'JUNIOR_MANAGER_PRODUKSI_HOME.html';
                 
-                // 5. Junior Manager PPIC
-                } else if (jabatan === 'junior manager ppic') {
+                // 5. JUNIOR MANAGER PPC (File tujuan tetap PPIC_HOME.html)
+                } else if (jabatan === 'JUNIOR MANAGER PPC') {
                     window.location.href = 'JUNIOR_MANAGER_PPIC_HOME.html';
                 
-                // 6. Manager
-                } else if (jabatan === 'manager') {
+                // 6. MANAGER
+                } else if (jabatan === 'MANAGER') {
                     window.location.href = 'MANAGER_HOME.html';
                 
-                // JIKA JABATAN TIDAK DIKENALI / TYPO
+                // JIKA TIDAK ADA YANG COCOK
                 } else {
-                    tampilkanPesan("Akses Ditolak: Jabatan '" + jabatan + "' tidak dikenali.", "error");
-                    client.auth.signOut(); // Logout otomatis biar aman
+                    tampilkanPesan("Akses Ditolak: Jabatan '" + jabatan + "' belum terdaftar.", "error");
+                    
+                    // Logout otomatis setelah 3 detik
+                    setTimeout(async () => {
+                         await client.auth.signOut();
+                    }, 3000);
                 }
 
             } catch (e) {
                 console.error("Gagal cek jabatan:", e);
-                tampilkanPesan("Terjadi kesalahan sistem saat mengecek jabatan.", "error");
+                tampilkanPesan("Terjadi kesalahan sistem.", "error");
             }
         }
 
