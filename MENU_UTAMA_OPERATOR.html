@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Menu Utama - AKG Maintenance</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
         :root {
             --primary-red: #c62828;
-            --dark-red: #8e0000;
+            --gradient-red: linear-gradient(135deg, #d32f2f, #b71c1c);
             --bg-white: #ffffff;
-            --text-black: #000000;
-            --nav-bg: #1a1a1a;
+            --text-dark: #1f2937;
+            --shadow-soft: 0 10px 25px -5px rgba(183, 28, 28, 0.4);
         }
 
         * { 
@@ -23,26 +23,50 @@
             box-sizing: border-box; 
             font-family: 'Poppins', sans-serif; 
             -webkit-tap-highlight-color: transparent; 
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         body {
-            background: var(--bg-white);
+            background: #111; 
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* --- FRAME HP --- */
+        .mobile-frame {
+            width: 100%;
+            max-width: 420px;
             height: 100vh;
-            width: 100vw;
+            max-height: 900px;
+            background: #f8fafc;
+            position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            position: relative;
+            box-shadow: 0 0 60px rgba(0,0,0,0.6);
+        }
+
+        @media (min-width: 480px) {
+            .mobile-frame {
+                height: 90vh;
+                border-radius: 40px;
+                border: 8px solid #2d2d2d;
+            }
         }
 
         /* --- HEADER --- */
         .header {
-            padding: 20px;
+            padding: 30px 25px 10px 25px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             position: absolute;
             top: 0;
+            left: 0;
             width: 100%;
             z-index: 50;
         }
@@ -53,401 +77,376 @@
             background: none;
             border: none;
             cursor: pointer;
-            z-index: 60;
+            transition: transform 0.2s;
         }
+        .hamburger-btn:active { transform: scale(0.9); }
 
-        .header-pill {
-            background: black;
-            padding: 8px 30px;
+        .header-capsule {
+            background: rgba(20, 20, 20, 0.95);
+            padding: 10px 0;
+            width: 55%;
             border-radius: 50px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            margin: 0 auto;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 65%;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            backdrop-filter: blur(5px);
         }
 
         .header-title {
-            color: #ff3333;
-            font-weight: 800;
-            font-size: 16px;
+            color: #ff5252;
+            font-weight: 700;
+            font-size: 14px;
             letter-spacing: 1px;
-            text-shadow: 0 0 10px rgba(255, 51, 51, 0.6);
             text-transform: uppercase;
         }
 
-        /* --- MAIN SLIDER CONTENT --- */
-        .slider-container {
+        /* --- SLIDER AREA --- */
+        .slider-wrapper {
             flex: 1;
             display: flex;
             overflow-x: auto;
             scroll-snap-type: x mandatory;
             scroll-behavior: smooth;
-            height: 100%;
-            width: 100%;
             -ms-overflow-style: none;  
-            scrollbar-width: none;  
+            scrollbar-width: none; 
+            position: relative;
+            z-index: 10;
+            cursor: grab;
         }
+        .slider-wrapper:active { cursor: grabbing; }
+        .slider-wrapper::-webkit-scrollbar { display: none; }
 
-        .slider-container::-webkit-scrollbar { display: none; }
-
-        .slide-item {
-            min-width: 100vw;
+        .slide {
+            min-width: 100%;
             height: 100%;
             scroll-snap-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding-bottom: 180px; /* Space for bottom nav */
-            position: relative;
+            padding-bottom: 240px; /* Tambah padding bawah karena gauge makin tinggi */
         }
 
-        .character-img {
-            height: 38vh;
-            max-height: 380px;
+        .char-img {
+            height: 35vh; /* Sedikit dikecilkan agar seimbang */
+            max-height: 320px;
             object-fit: contain;
-            margin-bottom: 25px;
-            filter: drop-shadow(0 15px 20px rgba(0,0,0,0.15));
-            animation: float 3s ease-in-out infinite;
+            margin-bottom: 35px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+            animation: float 4s ease-in-out infinite;
+            pointer-events: none;
         }
 
         @keyframes float {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-6px); }
         }
 
-        /* Style Tombol Menu */
-        .action-btn {
-            background: var(--primary-red);
+        /* --- MODERN MENU BUTTON --- */
+        .menu-btn {
+            background: var(--gradient-red);
             color: white;
-            width: 85%;
+            width: 82%;
             max-width: 300px;
-            padding: 16px 20px;
-            border-radius: 50px;
+            padding: 18px 25px;
+            border-radius: 20px;
             text-decoration: none;
             text-align: center;
-            font-weight: 700;
+            font-weight: 600;
             font-size: 15px;
-            box-shadow: 0 6px 0 var(--dark-red), 0 15px 25px rgba(198, 40, 40, 0.3);
-            border: 2px solid black;
-            transition: transform 0.1s;
+            letter-spacing: 0.5px;
+            line-height: 1.4;
+            border: none;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             position: relative;
-            z-index: 10;
-            line-height: 1.3;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            z-index: 20;
+            pointer-events: auto;
+            border-top: 1px solid rgba(255,255,255,0.2);
         }
 
-        .action-btn:active {
-            transform: translateY(4px);
-            box-shadow: 0 2px 0 var(--dark-red), 0 5px 10px rgba(0,0,0,0.2);
+        .menu-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px -5px rgba(183, 28, 28, 0.5);
+        }
+        .menu-btn:active {
+            transform: translateY(1px) scale(0.98);
         }
 
-        /* --- BOTTOM NAV (ROTATING WHEEL REFINED) --- */
-        .bottom-nav-container {
-            position: fixed;
+        /* --- NAVIGASI BAWAH (FULL SEMI-CIRCLE) --- */
+        .bottom-gauge-container {
+            position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 170px; /* Tinggi area navigasi */
+            height: 220px; /* Tinggi container pas untuk setengah lingkaran */
             overflow: hidden;
-            z-index: 40;
+            z-index: 30;
             pointer-events: none;
         }
 
-        /* Latar Merah Melengkung (Statis di background sebagai frame) */
-        .nav-arc-frame {
+        /* Busur Merah (Sekarang benar-benar bulat/setengah lingkaran) */
+        .gauge-arc {
             position: absolute;
-            bottom: -280px;
+            /* Agar jadi setengah lingkaran sempurna di bawah: 
+               width = height, dan bottom = - (height/2) */
+            bottom: -210px; 
             left: 50%;
             transform: translateX(-50%);
-            width: 600px;
-            height: 600px;
+            width: 420px; /* Sama dengan lebar layar maksimal */
+            height: 420px; /* Sama dengan lebar untuk jadi lingkaran sempurna */
             border-radius: 50%;
-            background: var(--primary-red);
-            border: 8px solid #222;
-            box-shadow: inset 0 10px 30px rgba(0,0,0,0.4);
-        }
-
-        /* Wadah Angka yang Berputar */
-        .wheel-rotator {
-            position: absolute;
-            bottom: -280px; /* Harus sama dengan nav-arc-frame */
-            left: 50%;
-            width: 600px;
-            height: 600px;
-            border-radius: 50%;
-            transform: translateX(-50%);
-            transform-origin: center center;
-            transition: transform 0.4s cubic-bezier(0.1, 0.7, 0.1, 1);
+            background: #d32f2f;
+            border: 6px solid #fff;
+            box-shadow: 0 -5px 30px rgba(0,0,0,0.2);
             pointer-events: auto;
+            display: flex;
+            justify-content: center;
         }
 
-        /* Garis-garis kecil (Ticks) */
-        .tick-mark {
+        /* Garis Pemisah */
+        .gauge-divider {
             position: absolute;
-            top: 15px;
+            top: 2px;
             left: 50%;
-            width: 2px;
-            height: 8px;
-            background: rgba(255,255,255,0.3);
-            transform-origin: center 285px; /* radius wheel (300) - top offset (15) */
+            width: 1px;
+            height: 25px;
+            background: rgba(255,255,255,0.4);
+            /* Transform origin disesuaikan dengan radius baru (420px / 2 = 210px) */
+            transform-origin: center 205px; 
+            z-index: 2;
         }
 
         /* Angka */
-        .arc-btn {
+        .number-wrapper {
             position: absolute;
-            top: 25px; /* Sedikit dibawah tick mark */
+            top: 0;
             left: 50%;
-            width: 40px;
-            height: 40px;
-            margin-left: -20px;
-            color: rgba(255,255,255,0.4);
-            font-weight: 700;
+            width: 0;
+            height: 210px; /* Setengah dari tinggi lingkaran gauge */
+            transform-origin: bottom center;
+            z-index: 3;
+            pointer-events: none;
+            display: flex;
+            justify-content: center;
+        }
+
+        .gauge-number {
+            margin-top: 10px;
+            color: rgba(255,255,255,0.6);
+            font-weight: 600;
             font-size: 16px;
-            text-decoration: none;
+            width: 30px;
+            height: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transform-origin: center 275px; /* radius 300 - top 25 */
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Poppins', monospace; /* Monospace agar lebar angka konsisten */
         }
 
-        .arc-btn.active {
+        .gauge-number.active {
             color: #fff;
-            font-size: 26px;
-            font-weight: 900;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-            transform: scale(1.2); /* Efek pop */
+            font-size: 24px;
+            font-weight: 800;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
 
-        /* --- CENTER CONTROL (GESER) REFINED --- */
-        .center-control {
+        /* Overlay Putih Tengah (Juga membulat penuh) */
+        .center-white-overlay {
             position: absolute;
-            bottom: -50px; /* Turunkan setengah lingkaran putih */
+            bottom: -125px; 
             left: 50%;
             transform: translateX(-50%);
-            width: 160px;
-            height: 160px;
-            background: white;
+            width: 250px;
+            height: 250px;
+            background: #f8fafc;
             border-radius: 50%;
-            z-index: 50;
+            z-index: 40;
             display: flex;
-            align-items: flex-start; /* Konten di bagian atas lingkaran */
             justify-content: center;
-            padding-top: 25px;
-            box-shadow: 0 -5px 25px rgba(0,0,0,0.15);
-            pointer-events: auto;
+            padding-top: 35px;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.08);
         }
 
-        .arrow-pill {
-            background: var(--primary-red);
-            padding: 8px 25px;
-            border-radius: 30px; /* Bentuk Pill lebih rapi dari polygon kasar */
+        /* Tombol Geser */
+        .geser-shape {
+            width: 120px;
+            height: 44px;
+            position: relative;
             display: flex;
             align-items: center;
-            gap: 10px;
-            box-shadow: 0 4px 10px rgba(198, 40, 40, 0.4);
-            border: 2px solid white; /* Outline putih agar kontras */
+            justify-content: center;
+        }
+        
+        .double-arrow-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-red);
+            clip-path: polygon(15% 0%, 85% 0%, 100% 50%, 85% 100%, 15% 100%, 0% 50%);
+            z-index: 1;
+            background: linear-gradient(to right, #b71c1c, #d32f2f, #b71c1c);
         }
 
         .geser-text {
+            position: relative;
+            z-index: 2;
             color: white;
-            font-weight: 800;
-            text-transform: uppercase;
+            font-weight: 700;
             font-size: 13px;
-            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
         }
 
-        .arrow-icon {
+        .arrow-icon-small {
+            position: relative;
+            z-index: 2;
             color: white;
-            font-size: 12px;
-            animation: bounce-x 1.5s infinite;
-        }
-        
-        .arrow-icon.left { animation-delay: 0s; }
-        .arrow-icon.right { animation-delay: 0.5s; }
-
-        @keyframes bounce-x {
-            0%, 100% { transform: translateX(0); opacity: 0.7; }
-            50% { transform: translateX(2px); opacity: 1; }
+            font-size: 11px;
+            margin: 0 10px;
+            opacity: 0.8;
         }
 
-        /* Sidebar Styles */
+        /* --- SIDEBAR MENU (Modern) --- */
         .sidebar-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5); z-index: 99;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4); z-index: 90;
             opacity: 0; visibility: hidden; transition: 0.3s;
+            backdrop-filter: blur(4px);
         }
         .sidebar-overlay.active { opacity: 1; visibility: visible; }
 
         .sidebar {
-            position: fixed; top: 20%; left: 20px; width: 200px;
-            background: #b71c1c; border: 3px solid black; padding: 20px 10px;
-            display: flex; flex-direction: column; gap: 15px;
-            z-index: 100; transform: translateX(-150%);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 10px 10px 0px rgba(0,0,0,0.2);
+            position: absolute; 
+            top: 0; left: 0; width: 280px; height: 100%;
+            background: #b71c1c; 
+            padding: 80px 20px;
+            display: flex; flex-direction: column; gap: 12px;
+            z-index: 95; transform: translateX(-100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 10px 0 30px rgba(0,0,0,0.2);
         }
         .sidebar.active { transform: translateX(0); }
 
-        .sidebar-btn {
-            background: transparent; border: 2px solid white;
-            border-radius: 30px; padding: 10px 15px;
-            color: white; text-decoration: none;
-            display: flex; align-items: center; gap: 12px;
-            font-weight: 700; font-size: 12px; text-transform: uppercase;
+        .sidebar-link {
+            display: flex; align-items: center; gap: 15px;
+            padding: 14px 20px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
         }
-        .sidebar-btn:hover { background: white; color: var(--primary-red); }
-        .sidebar-icon-circle {
-            width: 30px; height: 30px;
-            background: rgba(255,255,255,0.2); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
+        .sidebar-link:hover, .sidebar-link.active {
+            background: white;
+            color: #b71c1c;
+            border-color: white;
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
-        .sidebar-btn:hover .sidebar-icon-circle { background: var(--primary-red); color: white; }
 
-        .page-indicator {
-            position: absolute; top: 70px; width: 100%;
-            text-align: center; color: #aaa; font-size: 11px; font-weight: 600; z-index: 5; letter-spacing: 1px;
+        .close-sidebar-btn {
+            position: absolute; top: 25px; right: 25px;
+            background: none; border: none; color: white;
+            font-size: 24px; cursor: pointer; opacity: 0.8;
         }
     </style>
 </head>
 <body>
 
-    <!-- Sidebar Menu -->
-    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleMenu()"></div>
-    <div class="sidebar" id="sidebar">
-        <a href="index.html" class="sidebar-btn"><div class="sidebar-icon-circle"><i class="fa-solid fa-house"></i></div>HOME</a>
-        <a href="menu_utama.html" class="sidebar-btn active"><div class="sidebar-icon-circle"><i class="fa-solid fa-table-cells-large"></i></div>MENU UTAMA</a>
-        <a href="download_data.html" class="sidebar-btn"><div class="sidebar-icon-circle"><i class="fa-solid fa-cloud-arrow-down"></i></div>UNDUH DATA</a>
-        <a href="informasi_akun.html" class="sidebar-btn"><div class="sidebar-icon-circle"><i class="fa-solid fa-user"></i></div>AKUN</a>
-    </div>
-
-    <!-- Header -->
-    <header class="header">
-        <button class="hamburger-btn" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></button>
-        <div class="header-pill"><span class="header-title">MENU UTAMA</span></div>
-        <div style="width: 28px;"></div>
-    </header>
-
-    <div class="page-indicator">GESER KE KANAN / KIRI</div>
-
-    <!-- MAIN SLIDER (10 Items) -->
-    <div class="slider-container" id="mainSlider">
+    <div class="mobile-frame">
         
-        <!-- 1. Harian Mesin -->
-        <div class="slide-item">
-            <img src="gambar_1.png" alt="Worker 1" class="character-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/4807/4807695.png'">
-            <a href="clhmi.html" class="action-btn">Checklist Harian <br> Mesin Injection</a>
+        <!-- Sidebar -->
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleMenu()"></div>
+        <div class="sidebar" id="sidebar">
+            <button class="close-sidebar-btn" onclick="toggleMenu()"><i class="fa-solid fa-xmark"></i></button>
+            <a href="index.html" class="sidebar-link"><i class="fa-solid fa-house"></i> Home</a>
+            <a href="menu_utama.html" class="sidebar-link active"><i class="fa-solid fa-table-cells-large"></i> Menu Utama</a>
+            <a href="download_data.html" class="sidebar-link"><i class="fa-solid fa-cloud-arrow-down"></i> Unduh Data</a>
+            <a href="informasi_akun.html" class="sidebar-link"><i class="fa-solid fa-user"></i> Akun</a>
         </div>
 
-        <!-- 2. Harian Robot -->
-        <div class="slide-item">
-            <img src="gambar_2.png" alt="Worker 2" class="character-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3884/3884851.png'">
-            <a href="chslr.html" class="action-btn">Checklist Harian <br> Robot & Stand Label</a>
-        </div>
+        <!-- Header -->
+        <header class="header">
+            <button class="hamburger-btn" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></button>
+            <div class="header-capsule">
+                <span class="header-title">MENU UTAMA</span>
+            </div>
+            <div style="width: 28px;"></div>
+        </header>
 
-        <!-- 3. Pekerjaan Workshop -->
-        <div class="slide-item">
-            <img src="gambar_3.png" alt="Worker 3" class="character-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1650/1650365.png'">
-            <a href="ppw.html" class="action-btn">Pelaksanaan <br> Pekerjaan Workshop</a>
-        </div>
-
-        <!-- 4. Laporan Kerja -->
-        <div class="slide-item">
-            <img src="gambar_4.png" alt="Worker 4" class="character-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2040/2040946.png'">
-            <a href="Lkmr.html" class="action-btn">Laporan Kerja <br> Maintenance & Repair</a>
-        </div>
-
-        <!-- 5. Preventif Injection -->
-        <div class="slide-item">
-            <img src="gambar_5.png" alt="Worker 5" class="character-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3048/3048122.png'">
-            <a href="pmi.html" class="action-btn">Preventif Bulanan <br> Mesin Injection</a>
-        </div>
-
-        <!-- 6. Preventif Robot -->
-        <div class="slide-item">
-            <img src="gambar_6.png" alt="Worker 6" class="character-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3884/3884865.png'">
-            <a href="prslb.html" class="action-btn">Preventif Bulanan <br> Robot & Label</a>
-        </div>
-
-        <!-- 7. Laporan Overhaul -->
-        <div class="slide-item">
-            <img src="gambar_7.png" alt="Worker 7" class="character-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1995/1995470.png'">
-            <a href="pohm.html" class="action-btn">Form Laporan <br> Perawatan & Overhaul</a>
-        </div>
-
-        <!-- 8. Perawatan Mold -->
-        <div class="slide-item">
-            <img src="gambar_8.png" alt="Worker 8" class="character-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/4661/4661334.png'">
-            <a href="clpm.html" class="action-btn">Checklist <br> Perawatan Mold</a>
-        </div>
-
-        <!-- 9. Jadwal Overhaul -->
-        <div class="slide-item">
-            <img src="gambar_9.png" alt="Worker 9" class="character-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2829/2829827.png'">
-            <a href="Jpdo.html" class="action-btn">Jadwal Perawatan <br> Dan Overhaul</a>
-        </div>
-
-        <!-- 10. Kartu Riwayat -->
-        <div class="slide-item">
-            <img src="gambar_10.png" alt="Worker 10" class="character-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2641/2641409.png'">
-            <a href="kartu_riwayat.html" class="action-btn">Kartu Riwayat <br> Mesin</a>
-        </div>
-
-    </div>
-
-    <!-- BOTTOM NAV (WHEEL UI REFINED) -->
-    <div class="bottom-nav-container">
-        
-        <div class="nav-arc-frame">
-            <!-- Rotator berisi angka dan garis -->
-            <div class="wheel-rotator" id="wheel">
-                <!-- Javascript will populate lines and numbers here -->
-                
-                <!-- Angka 1-10 -->
-                <div class="arc-btn" onclick="scrollToSlide(0)" style="--i:0">1</div>
-                <div class="arc-btn" onclick="scrollToSlide(1)" style="--i:1">2</div>
-                <div class="arc-btn" onclick="scrollToSlide(2)" style="--i:2">3</div>
-                <div class="arc-btn" onclick="scrollToSlide(3)" style="--i:3">4</div>
-                <div class="arc-btn" onclick="scrollToSlide(4)" style="--i:4">5</div>
-                <div class="arc-btn" onclick="scrollToSlide(5)" style="--i:5">6</div>
-                <div class="arc-btn" onclick="scrollToSlide(6)" style="--i:6">7</div>
-                <div class="arc-btn" onclick="scrollToSlide(7)" style="--i:7">8</div>
-                <div class="arc-btn" onclick="scrollToSlide(8)" style="--i:8">9</div>
-                <div class="arc-btn" onclick="scrollToSlide(9)" style="--i:9">10</div>
-
-                <!-- Tick marks (garis kecil) between numbers -->
-                <!-- Kita akan generate via JS untuk presisi, atau manual di sini -->
-                <!-- Manual ticks di antara angka -->
-                <div class="tick-mark" style="--i:0.5"></div>
-                <div class="tick-mark" style="--i:1.5"></div>
-                <div class="tick-mark" style="--i:2.5"></div>
-                <div class="tick-mark" style="--i:3.5"></div>
-                <div class="tick-mark" style="--i:4.5"></div>
-                <div class="tick-mark" style="--i:5.5"></div>
-                <div class="tick-mark" style="--i:6.5"></div>
-                <div class="tick-mark" style="--i:7.5"></div>
-                <div class="tick-mark" style="--i:8.5"></div>
-                <div class="tick-mark" style="--i:9.5"></div>
-
+        <!-- Slider -->
+        <div class="slider-wrapper" id="mainSlider">
+            <!-- 1 -->
+            <div class="slide">
+                <img src="gambar_1.png" class="char-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/4807/4807695.png'">
+                <a href="clhmi.html" class="menu-btn">Checklist Harian <br> Mesin Injection</a>
+            </div>
+            <!-- 2 -->
+            <div class="slide">
+                <img src="gambar_2.png" class="char-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3884/3884851.png'">
+                <a href="chslr.html" class="menu-btn">Checklist Harian <br> Robot & Stand Label</a>
+            </div>
+            <!-- 3 -->
+            <div class="slide">
+                <img src="gambar_3.png" class="char-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1650/1650365.png'">
+                <a href="ppw.html" class="menu-btn">Pelaksanaan <br> Pekerjaan Workshop</a>
+            </div>
+            <!-- 4 -->
+            <div class="slide">
+                <img src="gambar_4.png" class="char-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2040/2040946.png'">
+                <a href="Lkmr.html" class="menu-btn">Laporan Kerja <br> Maintenance & Repair</a>
+            </div>
+            <!-- 5 -->
+            <div class="slide">
+                <img src="gambar_5.png" class="char-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3048/3048122.png'">
+                <a href="pmi.html" class="menu-btn">Preventif Bulanan <br> Mesin Injection</a>
+            </div>
+            <!-- 6 -->
+            <div class="slide">
+                <img src="gambar_6.png" class="char-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3884/3884865.png'">
+                <a href="prslb.html" class="menu-btn">Preventif Bulanan <br> Robot & Label</a>
+            </div>
+            <!-- 7 -->
+            <div class="slide">
+                <img src="gambar_7.png" class="char-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1995/1995470.png'">
+                <a href="pohm.html" class="menu-btn">Form Laporan <br> Perawatan & Overhaul</a>
+            </div>
+            <!-- 8 -->
+            <div class="slide">
+                <img src="gambar_8.png" class="char-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/4661/4661334.png'">
+                <a href="clpm.html" class="menu-btn">Checklist <br> Perawatan Mold</a>
+            </div>
+            <!-- 9 -->
+            <div class="slide">
+                <img src="gambar_9.png" class="char-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2829/2829827.png'">
+                <a href="Jpdo.html" class="menu-btn">Jadwal Perawatan <br> Dan Overhaul</a>
+            </div>
+            <!-- 10 -->
+            <div class="slide">
+                <img src="gambar_10.png" class="char-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2641/2641409.png'">
+                <a href="kartu_riwayat.html" class="menu-btn">Kartu Riwayat <br> Mesin</a>
             </div>
         </div>
 
-        <!-- Tombol Geser Timbul -->
-        <div class="center-control">
-            <div class="arrow-pill">
-                <i class="fa-solid fa-chevron-left arrow-icon left"></i>
-                <span class="geser-text">GESER</span>
-                <i class="fa-solid fa-chevron-right arrow-icon right"></i>
+        <!-- Gauge Navigasi -->
+        <div class="bottom-gauge-container">
+            <div class="gauge-arc" id="gaugeWheel"></div>
+            <div class="center-white-overlay">
+                <div class="geser-shape">
+                    <div class="double-arrow-bg"></div>
+                    <i class="fa-solid fa-chevron-left arrow-icon-small"></i>
+                    <span class="geser-text">GESER</span>
+                    <i class="fa-solid fa-chevron-right arrow-icon-small"></i>
+                </div>
             </div>
         </div>
+
     </div>
 
     <script>
@@ -457,93 +456,119 @@
         }
 
         const slider = document.getElementById('mainSlider');
-        const wheel = document.getElementById('wheel');
-        const arcBtns = document.querySelectorAll('.arc-btn');
-        const tickMarks = document.querySelectorAll('.tick-mark');
+        const gaugeWheel = document.getElementById('gaugeWheel');
+        const totalSlides = 10;
         
-        // Konfigurasi Roda
-        const ANGLE_PER_ITEM = 24; // Jarak antar angka (Derajat)
-        const TICK_OFFSET = ANGLE_PER_ITEM / 2; // Tick berada di tengah-tengah angka
-
-        // Inisialisasi Posisi Angka
-        arcBtns.forEach((btn, index) => {
-            const angle = index * ANGLE_PER_ITEM; 
-            // Putar posisi wrapper
-            btn.style.transform = `rotate(${angle}deg) translate(0, 0)`; // Reset transform basis
-            // Trik CSS: Kita putar elemen induknya (melalui style inline rotate)
-            // Namun karena kita pakai satu div rotator, kita set properti CSS transform via JS
+        // --- KONFIGURASI BARU AGAR FULL CIRCLE ---
+        // Karena radius sekarang jauh lebih kecil (radius 210px vs 300px sebelumnya),
+        // sudut antar item harus diperlebar agar angka tidak bertumpuk.
+        const segmentAngle = 36; // 360 derajat / 10 item = 36 derajat. 
+        // Ini akan membuat angka menyebar penuh satu lingkaran jika perlu.
+        
+        // 1. Render Angka Gauge
+        for (let i = 0; i < totalSlides; i++) {
+            const angle = i * segmentAngle;
             
-            // Simpan index original untuk referensi rotasi statis
-            btn.style.transform = `rotate(${angle}deg)`;
+            const numWrapper = document.createElement('div');
+            numWrapper.className = 'number-wrapper';
+            numWrapper.style.transform = `rotate(${angle}deg)`;
             
-            // Agar angka tetap tegak (opsional, tapi gauge style biasanya angka miring mengikuti kurva)
-            // Jika ingin tegak: btn.innerHTML = `<span style="transform: rotate(${-angle}deg); display:block;">${index+1}</span>`;
-        });
+            const numSpan = document.createElement('div');
+            numSpan.className = 'gauge-number';
+            numSpan.innerText = i + 1;
+            
+            numWrapper.appendChild(numSpan);
+            gaugeWheel.appendChild(numWrapper);
 
-        // Inisialisasi Posisi Tick Marks
-        tickMarks.forEach((tick, index) => {
-            // Kita ambil nilai style --i dari HTML (0.5, 1.5 dst)
-            const val = parseFloat(tick.getAttribute('style').replace('--i:', ''));
-            const angle = val * ANGLE_PER_ITEM;
-            tick.style.transform = `rotate(${angle}deg)`;
-        });
-
-        function scrollToSlide(index) {
-            const width = slider.clientWidth;
-            slider.scrollTo({
-                left: width * index,
-                behavior: 'smooth'
-            });
+            // Divider
+            const divAngle = angle + (segmentAngle / 2);
+            if (i < totalSlides - 1) { 
+                const divider = document.createElement('div');
+                divider.className = 'gauge-divider';
+                divider.style.transform = `rotate(${divAngle}deg)`;
+                gaugeWheel.appendChild(divider);
+            }
         }
 
-        function updateWheel() {
+        // 2. Logic Update Gauge
+        function updateGauge() {
             const scrollLeft = slider.scrollLeft;
             const width = slider.clientWidth;
-            
-            // Menghindari pembagian dengan 0 saat loading awal
             if (width === 0) return;
 
-            const scrollProgress = scrollLeft / width; 
+            const progress = scrollLeft / width; 
             
-            // Logika Rotasi:
-            // Roda berputar ke kiri (negatif) saat kita geser ke kanan (angka bertambah)
-            // Tujuannya agar angka yang aktif selalu berada di posisi jam 12 (0 derajat relatif terhadap layar)
-            const rotation = -(scrollProgress * ANGLE_PER_ITEM);
-            
-            wheel.style.transform = `translateX(-50%) rotate(${rotation}deg)`;
+            const wheelRotation = -(progress * segmentAngle);
+            gaugeWheel.style.transform = `translateX(-50%) rotate(${wheelRotation}deg)`;
 
-            // Update Active State
-            const activeIndex = Math.round(scrollProgress);
+            const activeIndex = Math.round(progress);
+            const numbers = document.querySelectorAll('.gauge-number');
             
-            arcBtns.forEach((btn, i) => {
-                // Hapus style transform inline lama yang hanya rotasi statis
-                // Kita ganti dengan scale effect jika aktif
+            numbers.forEach((num, index) => {
+                const itemAngle = index * segmentAngle;
+                const counterRotation = - (itemAngle + wheelRotation);
                 
-                const baseAngle = i * ANGLE_PER_ITEM;
+                let scale = 1;
+                let color = 'rgba(255,255,255,0.6)';
+                let weight = '600';
                 
-                if (i === activeIndex) {
-                    btn.classList.add('active');
-                    // Saat aktif, scale up tapi tetap pertahankan posisi rotasinya
-                    btn.style.transform = `rotate(${baseAngle}deg) scale(1.4)`;
-                    btn.style.zIndex = 10;
-                } else {
-                    btn.classList.remove('active');
-                    btn.style.transform = `rotate(${baseAngle}deg) scale(1)`;
-                    btn.style.zIndex = 1;
+                if (index === activeIndex) {
+                    scale = 1.4;
+                    color = '#fff';
+                    weight = '800';
                 }
+
+                num.style.transform = `rotate(${counterRotation}deg) scale(${scale})`;
+                num.style.color = color;
+                num.style.fontWeight = weight;
             });
         }
 
         slider.addEventListener('scroll', () => {
-            requestAnimationFrame(updateWheel);
+            requestAnimationFrame(updateGauge);
         });
-        
-        // Initial call
-        updateWheel();
-        
-        // Re-calculate on resize
-        window.addEventListener('resize', updateWheel);
 
+        // 3. Drag Logic
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        slider.addEventListener('mousedown', (e) => {
+            isDown = true;
+            slider.style.cursor = 'grabbing';
+            startX = e.pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+            slider.style.scrollSnapType = 'none';
+        });
+
+        slider.addEventListener('mouseleave', () => {
+            isDown = false;
+            slider.style.cursor = 'grab';
+            slider.style.scrollSnapType = 'x mandatory';
+        });
+
+        slider.addEventListener('mouseup', () => {
+            isDown = false;
+            slider.style.cursor = 'grab';
+            slider.style.scrollSnapType = 'x mandatory';
+            const width = slider.clientWidth;
+            const currentScroll = slider.scrollLeft;
+            const nearestSlide = Math.round(currentScroll / width);
+            slider.scrollTo({ left: nearestSlide * width, behavior: 'smooth' });
+        });
+
+        slider.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - slider.offsetLeft;
+            const walk = (x - startX) * 2;
+            slider.scrollLeft = scrollLeft - walk;
+        });
+
+        // Init
+        setTimeout(updateGauge, 100); 
+        window.addEventListener('resize', updateGauge);
+        
     </script>
 </body>
 </html>
