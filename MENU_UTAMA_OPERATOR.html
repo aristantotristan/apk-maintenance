@@ -332,6 +332,51 @@
             letter-spacing: 0.5px;
         }
 
+        /* --- POPUP PILIHAN LKMR --- */
+        .choice-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .choice-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .choice-box {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            width: 85%;
+            max-width: 320px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transform: scale(0.9);
+            transition: transform 0.3s;
+        }
+        .choice-overlay.active .choice-box {
+            transform: scale(1);
+        }
+        .choice-btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            margin: 10px 0;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: transform 0.2s;
+        }
+        .choice-btn:active { transform: scale(0.98); }
+        .btn-mesin { background: var(--primary); color: white; box-shadow: 0 4px 10px rgba(201, 25, 25, 0.3); }
+        .btn-repair { background: white; color: var(--primary); border: 2px solid var(--primary); }
+
     </style>
 </head>
 <body>
@@ -416,15 +461,16 @@
                     </div>
                 </a>
 
-                <!-- Item 4 -->
-                <a href="Lkmr.html" class="menu-card">
+                <!-- Item 4 (MODIFIED) -->
+                <!-- Menggunakan onclick untuk membuka modal, bukan href -->
+                <div class="menu-card" onclick="openLkmrModal()" style="cursor: pointer;">
                     <div class="char-image-container">
                         <img src="gambar_4.png" alt="Engineer" class="char-image">
                     </div>
                     <div class="menu-pill">
                         <h2>Laporan kerja<br>Maintenance & Repair</h2>
                     </div>
-                </a>
+                </div>
 
                 <!-- Item 5 -->
                 <a href="pmi_pelaksana.html" class="menu-card">
@@ -477,7 +523,7 @@
                 </a>
 
                  <!-- Item 10 -->
-                 <a href="kartu_riwayat.html" class="menu-card">
+                 <a href="kartu_riwayat_pic.html.html" class="menu-card">
                     <div class="char-image-container">
                         <img src="gambar_10.png" alt="Engineer" class="char-image">
                     </div>
@@ -491,8 +537,28 @@
         </div>
     </div>
 
-    <!-- SCRIPT UNTUK TOGGLE MENU -->
+    <!-- POPUP MODAL UNTUK LKMR -->
+    <div id="lkmrModal" class="choice-overlay">
+        <div class="choice-box">
+            <h3 style="margin-bottom: 20px; color: #333; font-size: 18px;">Pilih Jenis Laporan</h3>
+            
+            <a href="Lkmr_operator.html" class="choice-btn btn-mesin">
+                Maintenance Mesin
+            </a>
+            
+            <a href="Lkmr_operator_repair.html" class="choice-btn btn-repair">
+                Maintenance Repair
+            </a>
+            
+            <div onclick="closeLkmrModal()" style="margin-top: 15px; color: #888; font-size: 14px; cursor: pointer; text-decoration: underline;">
+                Tutup
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT -->
     <script>
+        // Sidebar Toggle
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebarOverlay');
@@ -500,6 +566,24 @@
             sidebar.classList.toggle('active');
             overlay.classList.toggle('active');
         }
+
+        // Modal Functions
+        function openLkmrModal() {
+            const modal = document.getElementById('lkmrModal');
+            modal.classList.add('active');
+        }
+
+        function closeLkmrModal() {
+            const modal = document.getElementById('lkmrModal');
+            modal.classList.remove('active');
+        }
+
+        // Tutup modal jika klik di luar box
+        document.getElementById('lkmrModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLkmrModal();
+            }
+        });
     </script>
 
 </body>
