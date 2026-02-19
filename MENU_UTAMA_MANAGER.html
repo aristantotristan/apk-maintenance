@@ -111,19 +111,18 @@
             z-index: 1;
         }
 
-        /* --- GRID LAYOUT RESPONSIVE --- */
+        /* --- GRID LAYOUT RESPONSIVE (MODIFIED UNTUK 2 ITEM) --- */
         .menu-grid {
-            display: grid;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
             gap: 20px;
             padding: 10px 0;
-            /* Default Mobile: 2 Kolom */
-            grid-template-columns: repeat(2, 1fr); 
         }
 
         /* Tablet & Laptop Adjustment */
         @media (min-width: 600px) {
             .menu-grid {
-                grid-template-columns: repeat(3, 1fr); /* 3 Kolom di Tablet Kecil */
                 gap: 30px;
             }
             .header-title-pill {
@@ -134,14 +133,7 @@
 
         @media (min-width: 900px) {
             .menu-grid {
-                grid-template-columns: repeat(4, 1fr); /* 4 Kolom di Laptop */
                 gap: 40px;
-            }
-        }
-
-        @media (min-width: 1100px) {
-             .menu-grid {
-                grid-template-columns: repeat(5, 1fr); /* 5 Kolom di Layar Lebar */
             }
         }
 
@@ -154,6 +146,8 @@
             position: relative;
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             height: 100%;
+            width: 100%;
+            max-width: 260px; /* Dibatasi agar tidak melebar karena menggunakan flex */
         }
 
         .menu-card:hover {
@@ -374,9 +368,8 @@
             </div>
 
             <!-- Title Pill (Absolute Center) -->
-            <div class="header-title-pill">MENU UTAMA OPERATOR</div>
+            <div class="header-title-pill">MENU UTAMA MANAGER</div>
 
-            <!-- Close Button REMOVED here -->
         </div>
     </header>
 
@@ -385,69 +378,9 @@
             
             <!-- Grid Content -->
             <div class="menu-grid">
-                
-                <!-- Item 1 -->
-                <a href="clhmi.html" class="menu-card">
-                    <div class="char-image-container">
-                        <img src="gambar_1.png" alt="Engineer" class="char-image">
-                    </div>
-                    <div class="menu-pill">
-                        <h2>Checklist Harian<br>mesin Injection</h2>
-                    </div>
-                </a>
 
-                <!-- Item 2 -->
-                <a href="chslr.html" class="menu-card">
-                    <div class="char-image-container">
-                        <img src="gambar_2.png" alt="Engineer" class="char-image">
-                    </div>
-                    <div class="menu-pill">
-                        <h2>Checklist Harian<br>stand label & robot</h2>
-                    </div>
-                </a>
-
-                <!-- Item 3 -->
-                <a href="ppw.html" class="menu-card">
-                    <div class="char-image-container">
-                        <img src="gambar_3.png" alt="Engineer" class="char-image">
-                    </div>
-                    <div class="menu-pill">
-                        <h2>Pelaksanaan<br>Pekerjaan Workshop</h2>
-                    </div>
-                </a>
-
-                <!-- Item 4 -->
-                <a href="Lkmr.html" class="menu-card">
-                    <div class="char-image-container">
-                        <img src="gambar_4.png" alt="Engineer" class="char-image">
-                    </div>
-                    <div class="menu-pill">
-                        <h2>Laporan kerja<br>Maintenance & Repair</h2>
-                    </div>
-                </a>
-
-                <!-- Item 5 -->
-                <a href="pmi.html" class="menu-card">
-                    <div class="char-image-container">
-                        <img src="gambar_5.png" alt="Engineer" class="char-image">
-                    </div>
-                    <div class="menu-pill">
-                        <h2>Preventif mesin<br>injection (clamping)</h2>
-                    </div>
-                </a>
-
-                <!-- Item 6 -->
-                <a href="prslb.html" class="menu-card">
-                    <div class="char-image-container">
-                        <img src="gambar_6.png" alt="Engineer" class="char-image">
-                    </div>
-                    <div class="menu-pill">
-                        <h2>Preventif Robot<br>& Stand Label</h2>
-                    </div>
-                </a>
-
-                <!-- Item 7 -->
-                <a href="pohm.html" class="menu-card">
+                <!-- Item 7 (Laporan Perawatan) -->
+                <a href="pohm_manager.html" class="menu-card">
                     <div class="char-image-container">
                         <img src="gambar_7.png" alt="Engineer" class="char-image">
                     </div>
@@ -456,33 +389,13 @@
                     </div>
                 </a>
 
-                <!-- Item 8 -->
-                <a href="clpm.html" class="menu-card">
-                    <div class="char-image-container">
-                        <img src="gambar_8.png" alt="Engineer" class="char-image">
-                    </div>
-                    <div class="menu-pill">
-                        <h2>Checklist<br>perawatan mold</h2>
-                    </div>
-                </a>
-
-                <!-- Item 9 -->
-                <a href="Jpdo.html" class="menu-card">
+                <!-- Item 9 (Jadwal Perawatan) -->
+                <a href="Jpdo_manager.html" class="menu-card">
                     <div class="char-image-container">
                         <img src="gambar_9.png" alt="Engineer" class="char-image">
                     </div>
                     <div class="menu-pill">
                         <h2>Jadwal perawatan<br>dan overhaul</h2>
-                    </div>
-                </a>
-
-                 <!-- Item 10 -->
-                 <a href="kartu_riwayat.html" class="menu-card">
-                    <div class="char-image-container">
-                        <img src="gambar_10.png" alt="Engineer" class="char-image">
-                    </div>
-                    <div class="menu-pill">
-                        <h2>Kartu<br>Riwayat</h2>
                     </div>
                 </a>
 
