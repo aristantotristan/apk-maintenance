@@ -12,7 +12,7 @@
     <style>
         /* ==================== THEME VARIABLES ==================== */
         :root {
-            --primary: #c91919; /* Merah Utama */
+            --primary: #c91919;
             --primary-light: #ffebeb;
             --primary-dark: #a50e0e;
             --bg-body: #f8f9fa;
@@ -37,17 +37,16 @@
             overflow-x: hidden;
         }
 
-        /* --- App Shell --- */
+        /* --- App Shell (Container Utama) --- */
         .app-shell {
             width: 100%;
-            max-width: 600px; /* Lebar optimal untuk tampilan home */
-            margin: 0 auto;
             min-height: 100vh;
             background: #fff;
             box-shadow: 0 0 40px rgba(0,0,0,0.05);
             position: relative;
             display: flex;
             flex-direction: column;
+            margin: 0 auto;
         }
 
         .app-container {
@@ -56,7 +55,11 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: center; /* Center content vertically */
+            justify-content: center; /* Vertically Center */
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         /* --- PROFESSIONAL HEADER BAR --- */
@@ -78,10 +81,10 @@
 
         .header-content-wrapper {
             width: 100%;
-            max-width: 600px;
+            max-width: 1200px;
             display: flex;
             align-items: center;
-            justify-content: center; /* Center title pill */
+            justify-content: center;
             padding: 0 20px;
             position: relative;
         }
@@ -100,6 +103,16 @@
             white-space: nowrap;
         }
 
+        /* --- LAYOUT WRAPPER --- */
+        .content-wrapper {
+            display: flex;
+            flex-direction: column; /* Selalu Stack ke bawah agar tengah */
+            align-items: center;
+            width: 100%;
+            max-width: 500px; /* Default Mobile Width */
+            transition: all 0.3s ease;
+        }
+
         /* --- CONTENT STYLES --- */
         .illustration-container {
             display: flex;
@@ -108,18 +121,21 @@
             margin-bottom: 30px;
             position: relative;
             padding: 20px;
+            width: 100%;
         }
 
-        /* Lingkaran dekoratif di belakang logo */
+        /* Lingkaran dekoratif */
         .illustration-container::before {
             content: '';
             position: absolute;
-            width: 250px;
-            height: 250px;
+            width: 80%;
+            padding-bottom: 80%; /* Aspect ratio 1:1 */
             background: radial-gradient(circle, rgba(201, 25, 25, 0.05) 0%, transparent 70%);
             border-radius: 50%;
             z-index: 0;
             animation: pulse 3s infinite ease-in-out;
+            max-width: 350px;
+            max-height: 350px;
         }
 
         @keyframes pulse {
@@ -130,15 +146,20 @@
 
         .illustration-container img {
             width: 100%;
-            max-width: 280px;
+            max-width: 280px; /* Max lebar gambar di HP */
             height: auto;
             position: relative;
             z-index: 1;
             filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+            transition: max-width 0.3s ease;
+        }
+
+        .text-group {
+            width: 100%;
+            text-align: center; /* Selalu Center */
         }
 
         .description-box {
-            text-align: center;
             margin-bottom: 40px;
             padding: 0 10px;
         }
@@ -148,6 +169,8 @@
             color: var(--text-gray);
             line-height: 1.6;
             font-weight: 500;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         /* --- ACTION BUTTONS --- */
@@ -155,12 +178,13 @@
             display: flex;
             gap: 15px;
             padding-bottom: 20px;
+            justify-content: center; /* Selalu Center */
         }
 
         .btn {
             flex: 1;
-            padding: 16px;
-            border-radius: 50px; /* Pill shape */
+            padding: 16px 24px;
+            border-radius: 50px;
             font-size: 14px;
             font-weight: 700;
             text-align: center;
@@ -173,9 +197,10 @@
             justify-content: center;
             gap: 8px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            white-space: nowrap;
+            max-width: 200px;
         }
 
-        /* Tombol Mulai - Merah Solid */
         .btn-mulai {
             background: var(--primary);
             color: white;
@@ -189,7 +214,6 @@
             box-shadow: 0 8px 20px rgba(201, 25, 25, 0.3);
         }
 
-        /* Tombol Panduan - Putih Outline Merah */
         .btn-panduan {
             background: white;
             color: var(--primary);
@@ -201,11 +225,46 @@
             transform: translateY(-2px);
         }
 
+        /* ==================== RESPONSIVE MEDIA QUERIES ==================== */
+        
+        /* TABLET & LAPTOP (Min Width 900px) */
+        @media (min-width: 900px) {
+            .app-shell {
+                max-width: 100%; 
+            }
+
+            .content-wrapper {
+                /* Layout Tetap Column (Atas Bawah) tapi lebih besar */
+                max-width: 800px; 
+                gap: 40px; 
+            }
+
+            .illustration-container img {
+                max-width: 420px; /* Gambar lebih besar di laptop */
+            }
+            
+            /* Lingkaran background ikut membesar */
+            .illustration-container::before {
+                max-width: 500px;
+                max-height: 500px;
+            }
+
+            .description-box p {
+                font-size: 18px; /* Font lebih besar */
+            }
+
+            .btn {
+                padding: 18px 40px; /* Tombol lebih besar */
+                font-size: 16px;
+                max-width: 250px;
+            }
+        }
+
     </style>
 </head>
 <body>
 
-    <!-- HEADER UTAMA (Tanpa Hamburger) -->
+    <!-- HEADER UTAMA -->
     <header class="main-header">
         <div class="header-content-wrapper">
             <div class="header-title-pill">HOME OPERATOR</div>
@@ -215,27 +274,36 @@
     <div class="app-shell">
         <div class="app-container">
             
-            <div class="illustration-container">
-                <img src="logo akg.png" alt="PT AKG Maintenance">
-            </div>
+            <!-- Wrapper untuk mengatur Layout Responsif -->
+            <div class="content-wrapper">
+                
+                <!-- Gambar selalu di atas/tengah -->
+                <div class="illustration-container">
+                    <img src="logo akg.png" alt="PT AKG Maintenance">
+                </div>
 
-            <div class="description-box">
-                <p>Solusi digital untuk monitoring dan perawatan mesin agar operasional tetap optimal dan efisien.</p>
-            </div>
+                <!-- Teks & Tombol selalu di bawah/tengah -->
+                <div class="text-group">
+                    <div class="description-box">
+                        <p>Solusi digital untuk monitoring dan perawatan mesin agar operasional tetap optimal dan efisien.</p>
+                    </div>
 
-            <div class="action-area">
-                <a href="MENU_UTAMA_OPERATOR.html" class="btn btn-mulai">
-                    <i class="fa-solid fa-play"></i> Mulai
-                </a>
-                <a href="paduan.html" class="btn btn-panduan">
-                    <i class="fa-solid fa-book-open"></i> Panduan
-                </a>
+                    <div class="action-area">
+                        <a href="MENU_UTAMA_OPERATOR.html" class="btn btn-mulai">
+                            <i class="fa-solid fa-play"></i> Mulai
+                        </a>
+                        <a href="paduan.html" class="btn btn-panduan">
+                            <i class="fa-solid fa-book-open"></i> Panduan
+                        </a>
+                    </div>
+                </div>
+
             </div>
 
         </div>
     </div>
 
-    <!-- SCRIPT (Logic Auth Tetap Sama) -->
+    <!-- SCRIPT -->
     <script>
         const SUPABASE_URL = 'https://dsyvlavphvrdidmodokd.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRzeXZsYXZwaHZyZGlkbW9kb2tkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYyNzI5NjMsImV4cCI6MjA4MTg0ODk2M30.mLmyZMUPtCaQl5Vck-Y7nImDFQuVWN_Mk6PrE-miP2E';
