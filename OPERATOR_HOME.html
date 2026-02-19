@@ -52,7 +52,7 @@
         .app-container {
             width: 100%;
             height: 100%;
-            min-height: 100vh; /* Full height */
+            min-height: 100vh;
             padding: 24px;
             padding-top: calc(var(--header-height) + 20px);
             display: flex;
@@ -94,11 +94,11 @@
         /* --- CONTENT WRAPPER --- */
         .content-wrapper {
             display: flex;
-            flex-direction: column; /* Default Mobile: Atas Bawah */
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             width: 100%;
-            max-width: 480px; /* Lebar default HP */
+            max-width: 480px; /* Default HP */
             gap: 30px;
             transition: all 0.3s ease;
             text-align: center;
@@ -113,7 +113,6 @@
             position: relative;
         }
 
-        /* Lingkaran Dekoratif */
         .illustration-bg {
             position: absolute;
             width: 100%;
@@ -122,7 +121,7 @@
             border-radius: 50%;
             z-index: 0;
             animation: pulse 4s infinite ease-in-out;
-            max-width: 400px;
+            max-width: 400px; /* Default HP */
         }
 
         @keyframes pulse {
@@ -150,7 +149,7 @@
         }
 
         .welcome-badge {
-            display: none; /* Sembunyikan di HP */
+            display: none;
         }
 
         .description-box {
@@ -162,7 +161,7 @@
             font-weight: 800;
             color: var(--text-dark);
             margin-bottom: 15px;
-            display: none; /* Judul besar sembunyi di HP */
+            display: none;
             line-height: 1.3;
         }
 
@@ -171,7 +170,7 @@
             color: var(--text-gray);
             line-height: 1.6;
             font-weight: 500;
-            max-width: 400px; /* Batasi lebar teks di HP */
+            max-width: 400px;
             margin: 0 auto;
         }
 
@@ -229,95 +228,102 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.05);
         }
 
-
-        /* ==================== MEDIA QUERIES ==================== */
+        /* ==================== RESPONSIVE BREAKPOINTS ==================== */
         
-        /* TABLET (Min Width 600px - Max 899px) */
+        /* TABLET (Min Width 600px - Max 1023px) */
         @media (min-width: 600px) {
             .app-container {
                 padding: 0 40px;
             }
 
             .content-wrapper {
-                max-width: 700px; /* Lebar lebih besar untuk Tablet */
-                gap: 35px;
+                max-width: 80%; /* Fluid width untuk tablet */
+                gap: 40px;
             }
 
             .illustration-bg {
-                max-width: 440px;
+                max-width: 500px; /* Background lebih besar */
             }
 
             .illustration-side img {
-                max-width: 340px; /* Gambar diperbesar sedikit */
+                max-width: 350px; /* Gambar proporsional */
+            }
+
+            .description-box h2 {
+                display: block; /* Judul mulai muncul di Tablet */
+                font-size: 28px;
+                margin-bottom: 10px;
             }
 
             .description-box p {
                 font-size: 16px;
-                max-width: 500px; /* Teks lebih lebar */
+                max-width: 550px; /* Teks melebar */
             }
 
             .btn {
-                padding: 16px 30px;
-                max-width: 220px;
+                padding: 18px 24px;
+                font-size: 15px;
+                max-width: 240px; /* Tombol lebih lebar */
             }
         }
 
-        /* LAPTOP/DESKTOP (Min Width 900px) */
-        @media (min-width: 900px) {
+        /* LAPTOP & DESKTOP (Min Width 1024px) */
+        @media (min-width: 1024px) {
             .app-container {
                 padding: 0 60px;
-                /* Background halus untuk layar besar */
                 background: linear-gradient(180deg, #fff 0%, #fdfdfd 100%);
             }
 
             .content-wrapper {
-                /* TETAP COLUMN (VERTIKAL) AGAR LOGO DI TENGAH */
-                flex-direction: column; 
-                max-width: 900px; /* Container melebar maksimal */
-                gap: 40px;
+                max-width: 1000px; /* Container besar */
+                gap: 50px;
             }
 
-            /* GAMBAR DIPERBESAR LAGI */
+            /* GAMBAR BESAR */
             .illustration-bg {
-                max-width: 480px; 
+                max-width: 550px;
             }
 
             .illustration-side img {
-                max-width: 380px; /* Logo Lebih Besar */
+                max-width: 450px; /* Logo mendominasi namun proporsional */
             }
 
-            /* TEKS DIPERBESAR & PROFESSIONAL */
-            .text-side {
-                max-width: 800px; 
-            }
-
+            /* TEKS & BADGE */
             .welcome-badge {
                 display: inline-block;
                 background: var(--primary-light);
                 color: var(--primary);
                 font-weight: 700;
-                font-size: 12px;
-                padding: 6px 16px;
+                font-size: 13px;
+                padding: 8px 20px;
                 border-radius: 20px;
-                margin-bottom: 20px;
-                letter-spacing: 1px;
+                margin-bottom: 25px;
+                letter-spacing: 1.5px;
                 text-transform: uppercase;
             }
 
             .description-box h2 {
-                display: block; /* Munculkan judul besar */
-                font-size: 38px;
+                display: block;
+                font-size: 42px; /* Judul Besar Professional */
+                margin-bottom: 20px;
             }
 
             .description-box p {
-                font-size: 18px; /* Teks deskripsi membesar */
-                max-width: 600px; /* Teks lebih lebar */
+                font-size: 18px; /* Deskripsi sangat jelas */
+                max-width: 700px; /* Lebar teks maksimal */
+                line-height: 1.7;
+            }
+
+            /* TOMBOL BESAR & LEBAR */
+            .action-area {
+                gap: 24px;
             }
 
             .btn {
-                padding: 18px 40px; /* Tombol lebih besar */
+                padding: 20px 40px;
                 font-size: 16px;
-                max-width: 240px;
+                max-width: 280px; /* Tombol sangat nyaman diklik */
+                border-radius: 60px;
             }
         }
     </style>
@@ -342,11 +348,11 @@
 
                 <!-- Teks & Tombol (Tengah Bawah) -->
                 <div class="text-side">
-                    <!-- Badge (Hanya di Laptop) -->
+                    <!-- Badge (Tablet/Laptop Only) -->
                     <div class="welcome-badge">Dashboard Sistem</div>
 
                     <div class="description-box">
-                        <!-- Judul Besar (Hanya di Laptop) -->
+                        <!-- Judul Besar (Tablet/Laptop Only) -->
                         <h2>Maintenance Digital & Monitoring</h2>
                         
                         <p>Solusi digital terintegrasi untuk pemantauan kondisi mesin, pelaporan kerusakan, dan manajemen perawatan agar operasional pabrik tetap optimal.</p>
