@@ -154,6 +154,8 @@
             position: relative;
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             height: 100%;
+            max-width: 250px; /* Ditambahkan agar jika hanya 1 item tidak melebar full */
+            margin: 0 auto;
         }
 
         .menu-card:hover {
@@ -374,7 +376,7 @@
             </div>
 
             <!-- Title Pill (Absolute Center) -->
-            <div class="header-title-pill">MENU UTAMA OPERATOR</div>
+            <div class="header-title-pill">MENU UTAMA JM PRODUKSI</div>
 
             <!-- Close Button REMOVED here -->
         </div>
@@ -384,105 +386,16 @@
         <div class="app-container">
             
             <!-- Grid Content -->
-            <div class="menu-grid">
+            <!-- Karena hanya ada 1 item, menggunakan flex lebih rapi untuk di tengah -->
+            <div class="menu-grid" style="display: flex; justify-content: center; flex-wrap: wrap;">
                 
-                <!-- Item 1 -->
-                <a href="clhmi.html" class="menu-card">
-                    <div class="char-image-container">
-                        <img src="gambar_1.png" alt="Engineer" class="char-image">
-                    </div>
-                    <div class="menu-pill">
-                        <h2>Checklist Harian<br>mesin Injection</h2>
-                    </div>
-                </a>
-
-                <!-- Item 2 -->
-                <a href="chslr.html" class="menu-card">
-                    <div class="char-image-container">
-                        <img src="gambar_2.png" alt="Engineer" class="char-image">
-                    </div>
-                    <div class="menu-pill">
-                        <h2>Checklist Harian<br>stand label & robot</h2>
-                    </div>
-                </a>
-
-                <!-- Item 3 -->
-                <a href="ppw.html" class="menu-card">
-                    <div class="char-image-container">
-                        <img src="gambar_3.png" alt="Engineer" class="char-image">
-                    </div>
-                    <div class="menu-pill">
-                        <h2>Pelaksanaan<br>Pekerjaan Workshop</h2>
-                    </div>
-                </a>
-
-                <!-- Item 4 -->
-                <a href="Lkmr.html" class="menu-card">
-                    <div class="char-image-container">
-                        <img src="gambar_4.png" alt="Engineer" class="char-image">
-                    </div>
-                    <div class="menu-pill">
-                        <h2>Laporan kerja<br>Maintenance & Repair</h2>
-                    </div>
-                </a>
-
-                <!-- Item 5 -->
-                <a href="pmi.html" class="menu-card">
-                    <div class="char-image-container">
-                        <img src="gambar_5.png" alt="Engineer" class="char-image">
-                    </div>
-                    <div class="menu-pill">
-                        <h2>Preventif mesin<br>injection (clamping)</h2>
-                    </div>
-                </a>
-
-                <!-- Item 6 -->
-                <a href="prslb.html" class="menu-card">
-                    <div class="char-image-container">
-                        <img src="gambar_6.png" alt="Engineer" class="char-image">
-                    </div>
-                    <div class="menu-pill">
-                        <h2>Preventif Robot<br>& Stand Label</h2>
-                    </div>
-                </a>
-
-                <!-- Item 7 -->
-                <a href="pohm.html" class="menu-card">
-                    <div class="char-image-container">
-                        <img src="gambar_7.png" alt="Engineer" class="char-image">
-                    </div>
-                    <div class="menu-pill">
-                        <h2>Laporan perawatan<br>& overhaul tools</h2>
-                    </div>
-                </a>
-
-                <!-- Item 8 -->
-                <a href="clpm.html" class="menu-card">
-                    <div class="char-image-container">
-                        <img src="gambar_8.png" alt="Engineer" class="char-image">
-                    </div>
-                    <div class="menu-pill">
-                        <h2>Checklist<br>perawatan mold</h2>
-                    </div>
-                </a>
-
-                <!-- Item 9 -->
-                <a href="Jpdo.html" class="menu-card">
+                <!-- Item 9 (Hanya 1 ini yang disisakan) -->
+                <a href="Jpdo_produksi.html" class="menu-card">
                     <div class="char-image-container">
                         <img src="gambar_9.png" alt="Engineer" class="char-image">
                     </div>
                     <div class="menu-pill">
                         <h2>Jadwal perawatan<br>dan overhaul</h2>
-                    </div>
-                </a>
-
-                 <!-- Item 10 -->
-                 <a href="kartu_riwayat.html" class="menu-card">
-                    <div class="char-image-container">
-                        <img src="gambar_10.png" alt="Engineer" class="char-image">
-                    </div>
-                    <div class="menu-pill">
-                        <h2>Kartu<br>Riwayat</h2>
                     </div>
                 </a>
 
