@@ -230,8 +230,39 @@
         }
 
 
-        /* ==================== MEDIA QUERIES (TABLET & LAPTOP) ==================== */
+        /* ==================== MEDIA QUERIES ==================== */
         
+        /* TABLET (Min Width 600px - Max 899px) */
+        @media (min-width: 600px) {
+            .app-container {
+                padding: 0 40px;
+            }
+
+            .content-wrapper {
+                max-width: 700px; /* Lebar lebih besar untuk Tablet */
+                gap: 35px;
+            }
+
+            .illustration-bg {
+                max-width: 440px;
+            }
+
+            .illustration-side img {
+                max-width: 340px; /* Gambar diperbesar sedikit */
+            }
+
+            .description-box p {
+                font-size: 16px;
+                max-width: 500px; /* Teks lebih lebar */
+            }
+
+            .btn {
+                padding: 16px 30px;
+                max-width: 220px;
+            }
+        }
+
+        /* LAPTOP/DESKTOP (Min Width 900px) */
         @media (min-width: 900px) {
             .app-container {
                 padding: 0 60px;
@@ -242,13 +273,13 @@
             .content-wrapper {
                 /* TETAP COLUMN (VERTIKAL) AGAR LOGO DI TENGAH */
                 flex-direction: column; 
-                max-width: 900px; /* Container melebar */
+                max-width: 900px; /* Container melebar maksimal */
                 gap: 40px;
             }
 
-            /* GAMBAR DIPERBESAR */
+            /* GAMBAR DIPERBESAR LAGI */
             .illustration-bg {
-                max-width: 480px; /* Lingkaran Background Lebih Besar */
+                max-width: 480px; 
             }
 
             .illustration-side img {
@@ -257,7 +288,7 @@
 
             /* TEKS DIPERBESAR & PROFESSIONAL */
             .text-side {
-                max-width: 800px; /* Lebar teks dimaksimalkan */
+                max-width: 800px; 
             }
 
             .welcome-badge {
