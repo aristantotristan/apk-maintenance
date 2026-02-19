@@ -35,31 +35,29 @@
             min-height: 100vh;
             color: var(--text-dark);
             overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         /* --- App Shell (Container Utama) --- */
         .app-shell {
             width: 100%;
-            min-height: 100vh;
+            flex: 1;
             background: #fff;
-            box-shadow: 0 0 40px rgba(0,0,0,0.05);
             position: relative;
             display: flex;
             flex-direction: column;
-            margin: 0 auto;
         }
 
         .app-container {
+            width: 100%;
+            height: 100%;
+            min-height: 100vh; /* Full height */
             padding: 24px;
             padding-top: calc(var(--header-height) + 20px);
-            flex: 1;
             display: flex;
-            flex-direction: column;
-            justify-content: center; /* Vertically Center */
+            justify-content: center;
             align-items: center;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
         }
 
         /* --- PROFESSIONAL HEADER BAR --- */
@@ -79,16 +77,6 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.03);
         }
 
-        .header-content-wrapper {
-            width: 100%;
-            max-width: 1200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 20px;
-            position: relative;
-        }
-
         .header-title-pill {
             border: 2px solid var(--primary);
             color: var(--primary);
@@ -103,65 +91,79 @@
             white-space: nowrap;
         }
 
-        /* --- LAYOUT WRAPPER --- */
+        /* --- CONTENT WRAPPER --- */
         .content-wrapper {
             display: flex;
-            flex-direction: column; /* Selalu Stack ke bawah agar tengah */
+            flex-direction: column; /* Default Mobile: Atas Bawah */
             align-items: center;
+            justify-content: center;
             width: 100%;
-            max-width: 500px; /* Default Mobile Width */
+            max-width: 480px; /* Lebar default HP */
+            gap: 30px;
             transition: all 0.3s ease;
+            text-align: center;
         }
 
-        /* --- CONTENT STYLES --- */
-        .illustration-container {
+        /* --- GAMBAR / ILLUSTRATION --- */
+        .illustration-side {
+            width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 30px;
             position: relative;
-            padding: 20px;
-            width: 100%;
         }
 
-        /* Lingkaran dekoratif */
-        .illustration-container::before {
-            content: '';
+        /* Lingkaran Dekoratif */
+        .illustration-bg {
             position: absolute;
-            width: 80%;
-            padding-bottom: 80%; /* Aspect ratio 1:1 */
+            width: 100%;
+            padding-bottom: 100%; /* Aspect ratio 1:1 */
             background: radial-gradient(circle, rgba(201, 25, 25, 0.05) 0%, transparent 70%);
             border-radius: 50%;
             z-index: 0;
-            animation: pulse 3s infinite ease-in-out;
-            max-width: 350px;
-            max-height: 350px;
+            animation: pulse 4s infinite ease-in-out;
+            max-width: 400px;
         }
 
         @keyframes pulse {
             0% { transform: scale(0.95); opacity: 0.5; }
-            50% { transform: scale(1.1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 0.8; }
             100% { transform: scale(0.95); opacity: 0.5; }
         }
 
-        .illustration-container img {
+        .illustration-side img {
             width: 100%;
-            max-width: 280px; /* Max lebar gambar di HP */
+            max-width: 280px; /* Ukuran HP */
             height: auto;
             position: relative;
             z-index: 1;
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+            filter: drop-shadow(0 15px 30px rgba(0,0,0,0.1));
             transition: max-width 0.3s ease;
         }
 
-        .text-group {
+        /* --- TEXT & ACTIONS --- */
+        .text-side {
             width: 100%;
-            text-align: center; /* Selalu Center */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .welcome-badge {
+            display: none; /* Sembunyikan di HP */
         }
 
         .description-box {
-            margin-bottom: 40px;
-            padding: 0 10px;
+            margin-bottom: 30px;
+        }
+
+        .description-box h2 {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            display: none; /* Judul besar sembunyi di HP */
+            line-height: 1.3;
         }
 
         .description-box p {
@@ -169,21 +171,20 @@
             color: var(--text-gray);
             line-height: 1.6;
             font-weight: 500;
-            max-width: 600px;
+            max-width: 400px; /* Batasi lebar teks di HP */
             margin: 0 auto;
         }
 
-        /* --- ACTION BUTTONS --- */
         .action-area {
             display: flex;
             gap: 15px;
-            padding-bottom: 20px;
-            justify-content: center; /* Selalu Center */
+            width: 100%;
+            justify-content: center;
         }
 
         .btn {
             flex: 1;
-            padding: 16px 24px;
+            padding: 16px 20px;
             border-radius: 50px;
             font-size: 14px;
             font-weight: 700;
@@ -195,11 +196,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             white-space: nowrap;
             max-width: 200px;
         }
+
+        .btn i { font-size: 16px; }
 
         .btn-mulai {
             background: var(--primary);
@@ -210,8 +213,8 @@
         .btn-mulai:hover {
             background: var(--primary-dark);
             border-color: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(201, 25, 25, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(201, 25, 25, 0.3);
         }
 
         .btn-panduan {
@@ -222,75 +225,105 @@
 
         .btn-panduan:hover {
             background: var(--primary-light);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
         }
 
-        /* ==================== RESPONSIVE MEDIA QUERIES ==================== */
+
+        /* ==================== MEDIA QUERIES (TABLET & LAPTOP) ==================== */
         
-        /* TABLET & LAPTOP (Min Width 900px) */
         @media (min-width: 900px) {
-            .app-shell {
-                max-width: 100%; 
+            .app-container {
+                padding: 0 60px;
+                /* Background halus untuk layar besar */
+                background: linear-gradient(180deg, #fff 0%, #fdfdfd 100%);
             }
 
             .content-wrapper {
-                /* Layout Tetap Column (Atas Bawah) tapi lebih besar */
-                max-width: 800px; 
-                gap: 40px; 
+                /* TETAP COLUMN (VERTIKAL) AGAR LOGO DI TENGAH */
+                flex-direction: column; 
+                max-width: 900px; /* Container melebar */
+                gap: 40px;
             }
 
-            .illustration-container img {
-                max-width: 420px; /* Gambar lebih besar di laptop */
+            /* GAMBAR DIPERBESAR */
+            .illustration-bg {
+                max-width: 480px; /* Lingkaran Background Lebih Besar */
             }
-            
-            /* Lingkaran background ikut membesar */
-            .illustration-container::before {
-                max-width: 500px;
-                max-height: 500px;
+
+            .illustration-side img {
+                max-width: 380px; /* Logo Lebih Besar */
+            }
+
+            /* TEKS DIPERBESAR & PROFESSIONAL */
+            .text-side {
+                max-width: 800px; /* Lebar teks dimaksimalkan */
+            }
+
+            .welcome-badge {
+                display: inline-block;
+                background: var(--primary-light);
+                color: var(--primary);
+                font-weight: 700;
+                font-size: 12px;
+                padding: 6px 16px;
+                border-radius: 20px;
+                margin-bottom: 20px;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+            }
+
+            .description-box h2 {
+                display: block; /* Munculkan judul besar */
+                font-size: 38px;
             }
 
             .description-box p {
-                font-size: 18px; /* Font lebih besar */
+                font-size: 18px; /* Teks deskripsi membesar */
+                max-width: 600px; /* Teks lebih lebar */
             }
 
             .btn {
                 padding: 18px 40px; /* Tombol lebih besar */
                 font-size: 16px;
-                max-width: 250px;
+                max-width: 240px;
             }
         }
-
     </style>
 </head>
 <body>
 
     <!-- HEADER UTAMA -->
     <header class="main-header">
-        <div class="header-content-wrapper">
-            <div class="header-title-pill">HOME OPERATOR</div>
-        </div>
+        <div class="header-title-pill">HOME OPERATOR</div>
     </header>
 
     <div class="app-shell">
         <div class="app-container">
             
-            <!-- Wrapper untuk mengatur Layout Responsif -->
             <div class="content-wrapper">
                 
-                <!-- Gambar selalu di atas/tengah -->
-                <div class="illustration-container">
+                <!-- Gambar (Tengah) -->
+                <div class="illustration-side">
+                    <div class="illustration-bg"></div>
                     <img src="logo akg.png" alt="PT AKG Maintenance">
                 </div>
 
-                <!-- Teks & Tombol selalu di bawah/tengah -->
-                <div class="text-group">
+                <!-- Teks & Tombol (Tengah Bawah) -->
+                <div class="text-side">
+                    <!-- Badge (Hanya di Laptop) -->
+                    <div class="welcome-badge">Dashboard Sistem</div>
+
                     <div class="description-box">
-                        <p>Solusi digital untuk monitoring dan perawatan mesin agar operasional tetap optimal dan efisien.</p>
+                        <!-- Judul Besar (Hanya di Laptop) -->
+                        <h2>Maintenance Digital & Monitoring</h2>
+                        
+                        <p>Solusi digital terintegrasi untuk pemantauan kondisi mesin, pelaporan kerusakan, dan manajemen perawatan agar operasional pabrik tetap optimal.</p>
                     </div>
 
                     <div class="action-area">
                         <a href="MENU_UTAMA_OPERATOR.html" class="btn btn-mulai">
-                            <i class="fa-solid fa-play"></i> Mulai
+                            <i class="fa-solid fa-rocket"></i> Mulai Akses
                         </a>
                         <a href="paduan.html" class="btn btn-panduan">
                             <i class="fa-solid fa-book-open"></i> Panduan
@@ -313,17 +346,12 @@
             try {
                 const { data: { session } } = await client.auth.getSession();
                 if (!session) {
-                    console.log("Session not found, attempting redirect...");
-                    try {
-                        window.location.href = 'index.html';
-                    } catch (navError) {
-                        console.warn("Redirect blocked:", navError);
-                    }
+                    try { window.location.href = 'index.html'; } catch (e) {}
                     return;
                 }
-                console.log("Session Valid for User:", session.user.id);
+                console.log("Session Valid");
             } catch (err) {
-                console.error("Error checking auth:", err);
+                console.error("Auth Error:", err);
             }
         }
 
