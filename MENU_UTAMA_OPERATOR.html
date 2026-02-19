@@ -3,403 +3,520 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Menu Utama - Grid Style</title>
+    <title>Menu Utama - AKG Maintenance</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
         :root {
-            --primary-red: #c62828;
-            --pill-red: #d32f2f;
-            --bg-white: #ffffff;
-            --text-dark: #1f2937;
-            --gray-close: #5e5e5e;
+            --primary: #c91919; /* Merah */
+            --primary-dark: #a50e0e;
+            --bg-body: #f8f9fa; /* Sedikit abu-abu agar kontras dengan card putih */
+            --text-dark: #333333;
+            --sidebar-width: 280px;
+            --header-height: 80px;
         }
 
         * { 
             margin: 0; 
             padding: 0; 
             box-sizing: border-box; 
-            font-family: 'Poppins', sans-serif; 
+            font-family: 'Inter', sans-serif; 
             -webkit-tap-highlight-color: transparent; 
         }
 
         body {
-            background: #ffffff;
+            background: var(--bg-body);
             min-height: 100vh;
-        }
-
-        /* --- CONTAINER UTAMA --- */
-        .mobile-frame {
-            width: 100%;
-            max-width: 500px; 
-            margin: 0 auto;
-            min-height: 100vh;
-            background: #ffffff;
-            position: relative;
+            color: var(--text-dark);
             overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
         }
 
-        /* --- HEADER AREA --- */
-        .header-container {
-            padding: 20px 25px 10px 25px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            z-index: 50;
-            background: white;
-        }
-
-        .close-top-btn {
-            width: 40px;
-            height: 40px;
-            background: var(--gray-close);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 18px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-            cursor: pointer;
-            border: none;
-            transition: transform 0.2s;
-        }
-        .close-top-btn:active { transform: scale(0.9); }
-
-        .header-row {
+        /* --- App Shell (Container Utama) --- */
+        .app-shell {
             width: 100%;
+            max-width: 1200px; /* Lebar maksimal untuk Laptop */
+            margin: 0 auto; /* Center di layar besar */
+            min-height: 100vh;
+            position: relative;
+            background: #fff;
+            box-shadow: 0 0 40px rgba(0,0,0,0.05); /* Bayangan halus di pinggir layar laptop */
+        }
+
+        .app-container {
+            padding: 20px;
+            padding-top: calc(var(--header-height) + 20px); /* Space untuk fixed header */
+        }
+
+        /* --- PROFESSIONAL HEADER BAR --- */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0; /* Ubah ke 0 agar full width, nanti diatur max-width nya */
+            right: 0;
+            height: var(--header-height);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Konten center */
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        }
+
+        .header-content-wrapper {
+            width: 100%;
+            max-width: 1200px; /* Sesuaikan dengan app-shell */
             display: flex;
             align-items: center;
             justify-content: space-between;
+            padding: 0 20px;
         }
 
-        .hamburger-btn {
-            font-size: 28px;
-            color: var(--primary-red);
-            background: none;
-            border: none;
+        /* Tombol Hamburger (Kiri) */
+        .hamburger-menu {
+            font-size: 26px;
+            color: var(--primary);
             cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            transition: transform 0.2s;
         }
+        .hamburger-menu:active { transform: scale(0.9); }
 
-        .main-menu-pill {
-            border: 2px solid var(--primary-red);
+        /* Judul (Tengah) */
+        .header-title-pill {
+            border: 2px solid var(--primary);
+            color: var(--primary);
             padding: 8px 30px;
             border-radius: 50px;
-            color: var(--primary-red);
-            font-weight: 700;
+            font-weight: 800;
             font-size: 14px;
-            letter-spacing: 0.5px;
-            background: white;
             text-transform: uppercase;
+            letter-spacing: 1px;
+            background: white;
+            box-shadow: 0 4px 10px rgba(201, 25, 25, 0.1);
+            white-space: nowrap;
         }
 
-        .spacer { width: 28px; }
-
-        /* --- GRID CONTENT --- */
-        .content-scroll {
-            flex: 1;
-            overflow: visible; 
-            padding: 20px 25px;
-            padding-bottom: 100px; /* Space for pagination */
+        /* Tombol Close (Kanan) */
+        .close-app-btn {
+            width: 40px;
+            height: 40px;
+            background: #f1f1f1;
+            border-radius: 50%;
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 18px;
+            text-decoration: none;
+            transition: all 0.2s;
         }
-        
-        /* Grid Container */
+        .close-app-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        /* --- GRID LAYOUT RESPONSIVE --- */
         .menu-grid {
-            display: none; /* Default hidden */
-            grid-template-columns: 1fr 1fr;
-            gap: 40px 20px; /* Gap vertikal ditambah sedikit */
-            align-items: end; /* Item align bawah agar rapi */
-            animation: fadeIn 0.4s ease-in-out;
-        }
-
-        .menu-grid.active {
             display: grid;
+            gap: 20px;
+            padding: 10px 0;
+            /* Default Mobile: 2 Kolom */
+            grid-template-columns: repeat(2, 1fr); 
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Tablet & Laptop Adjustment */
+        @media (min-width: 600px) {
+            .menu-grid {
+                grid-template-columns: repeat(3, 1fr); /* 3 Kolom di Tablet Kecil */
+                gap: 30px;
+            }
+            .header-title-pill {
+                font-size: 16px;
+                padding: 10px 40px;
+            }
         }
 
-        /* --- ITEM KARTU --- */
-        .menu-item {
+        @media (min-width: 900px) {
+            .menu-grid {
+                grid-template-columns: repeat(4, 1fr); /* 4 Kolom di Laptop */
+                gap: 40px;
+            }
+        }
+
+        @media (min-width: 1100px) {
+             .menu-grid {
+                grid-template-columns: repeat(5, 1fr); /* 5 Kolom di Layar Lebar */
+            }
+        }
+
+        /* --- MENU CARD (Grid Item) --- */
+        .menu-card {
             display: flex;
             flex-direction: column;
             align-items: center;
+            text-decoration: none;
             position: relative;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            height: 100%;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .menu-card:active {
+            transform: scale(0.95);
+        }
+
+        .char-image-container {
+            width: 100%;
+            height: 140px; /* Tinggi gambar konsisten */
+            display: flex;
+            align-items: flex-end; 
+            justify-content: center;
+            margin-bottom: -20px; /* Overlap dengan tombol */
+            z-index: 2;
+            transition: transform 0.3s ease;
+        }
+        
+        /* Efek hover gambar sedikit membesar */
+        .menu-card:hover .char-image-container {
+            transform: scale(1.05);
         }
 
         .char-image {
-            height: 150px; /* Sedikit diperbesar karena header atas hilang */
-            width: auto;
+            max-width: 100%;
+            max-height: 100%;
             object-fit: contain;
-            z-index: 1;
-            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.15));
-            transition: transform 0.3s;
-            margin-bottom: -15px; /* Overlap dengan tombol bawah */
-        }
-        .menu-item:hover .char-image {
-            transform: scale(1.05) translateY(-5px);
+            filter: drop-shadow(0 8px 15px rgba(0,0,0,0.2));
         }
 
-        .bottom-pill {
-            background: var(--pill-red);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 700;
-            text-align: center;
-            z-index: 2;
+        .menu-pill {
+            background: linear-gradient(180deg, #d32f2f 0%, #b71c1c 100%);
             width: 100%;
-            text-decoration: none;
-            box-shadow: 0 4px 10px rgba(198, 40, 40, 0.3);
-            border: 2px solid white; /* Border putih agar kontras dengan overlap gambar */
+            padding: 25px 15px 15px 15px; /* Padding atas lebih besar karena ketutup gambar */
+            border-radius: 20px;
+            border: 2px solid #a50e0e;
+            color: white;
+            text-align: center;
+            z-index: 1;
+            box-shadow: 0 10px 20px rgba(201, 25, 25, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 40px;
-            font-style: italic;
-            line-height: 1.3;
+            min-height: 85px;
+            transition: box-shadow 0.3s ease;
         }
 
-        /* --- PAGINATION BULAT --- */
-        .pagination-container {
-            position: fixed; 
-            bottom: 30px;
+        .menu-card:hover .menu-pill {
+            box-shadow: 0 15px 30px rgba(201, 25, 25, 0.4);
+            border-color: #ff5252;
+        }
+
+        .menu-pill h2 {
+            font-size: 11px; /* Ukuran font disesuaikan agar muat */
+            font-weight: 700;
+            line-height: 1.3;
+            margin: 0;
+            font-style: italic;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.2);
+        }
+
+        /* Responsive Text Size */
+        @media (min-width: 768px) {
+            .menu-pill h2 {
+                font-size: 13px;
+            }
+            .char-image-container {
+                height: 160px;
+            }
+        }
+
+        /* --- OFF-CANVAS SIDEBAR --- */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
             left: 0;
             width: 100%;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            pointer-events: none;
-            z-index: 40;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
         }
 
-        .page-circle {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 2px solid var(--primary-red);
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .side-nav {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: var(--sidebar-width);
+            height: 100vh;
             background: white;
-            color: var(--primary-red);
+            z-index: 2001;
+            transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1); /* Smooth slide */
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-shadow: 10px 0 30px rgba(0,0,0,0.1);
+        }
+
+        .side-nav.active {
+            left: 0;
+        }
+
+        /* Sidebar Header */
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .sidebar-title {
+            font-weight: 800;
+            color: var(--primary);
+            font-size: 20px;
+        }
+
+        .sidebar-close {
+            font-size: 24px;
+            color: #888;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .sidebar-close:hover { color: var(--primary); }
+
+        /* Tombol Navigasi Sidebar */
+        .nav-item {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--primary);
+            background: white;
+            width: 100%;
+            padding: 14px 20px;
+            margin-bottom: 15px;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-item:hover, .nav-item:active {
+            border-color: var(--primary);
+            background: #fff5f5;
+            transform: translateX(5px);
+        }
+
+        .nav-icon-box {
             display: flex;
             align-items: center;
             justify-content: center;
+            width: 32px;
+            height: 32px;
+            margin-right: 15px;
+            font-size: 20px;
+            color: var(--primary);
+        }
+
+        .nav-item span {
+            font-size: 14px;
             font-weight: 700;
-            font-size: 16px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            pointer-events: auto;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .page-circle.active {
-            background: var(--primary-red);
-            color: white;
-            transform: scale(1.1);
-        }
-
-        /* --- SIDEBAR --- */
-        .sidebar-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.4); z-index: 90;
-            opacity: 0; visibility: hidden; transition: 0.3s;
-            backdrop-filter: blur(2px);
-        }
-        .sidebar-overlay.active { opacity: 1; visibility: visible; }
-
-        .sidebar {
-            position: fixed; top: 0; left: 0; width: 260px; height: 100%;
-            background: var(--pill-red);
-            padding: 80px 20px;
-            display: flex; flex-direction: column; gap: 15px;
-            z-index: 95; transform: translateX(-100%);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 5px 0 25px rgba(0,0,0,0.2);
-        }
-        .sidebar.active { transform: translateX(0); }
-
-        .sidebar-link {
-            display: flex; align-items: center; gap: 15px;
-            padding: 12px 20px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 10px;
-            color: white; text-decoration: none;
-            font-weight: 600; font-size: 14px;
-        }
-        .sidebar-link:hover { background: white; color: var(--pill-red); }
-        .close-sidebar-btn {
-            position: absolute; top: 20px; right: 20px;
-            background: none; border: none; color: white;
-            font-size: 24px; cursor: pointer;
-        }
-        
-        .floating-widget {
-            position: fixed;
-            right: -15px;
-            top: 50%;
-            width: 40px;
-            height: 40px;
-            background: #00bcd4;
-            border-radius: 50%;
-            z-index: 40;
-            box-shadow: 0 4px 10px rgba(0,188,212,0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
     </style>
 </head>
 <body>
 
-    <div class="mobile-frame">
-        
-        <!-- Sidebar Menu -->
-        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleMenu()"></div>
-        <div class="sidebar" id="sidebar">
-            <button class="close-sidebar-btn" onclick="toggleMenu()"><i class="fa-solid fa-xmark"></i></button>
-            <a href="#" class="sidebar-link"><i class="fa-solid fa-house"></i> Home</a>
-            <a href="#" class="sidebar-link"><i class="fa-solid fa-list-check"></i> Checklist</a>
-            <a href="#" class="sidebar-link"><i class="fa-solid fa-gear"></i> Settings</a>
-        </div>
+    <!-- OVERLAY & SIDEBAR -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
-        <!-- Header -->
-        <div class="header-container">
-            <button class="close-top-btn" onclick="history.back()">
+    <nav class="side-nav" id="sidebar">
+        <div class="sidebar-header">
+            <span class="sidebar-title">AKG Maintenance</span>
+            <div class="sidebar-close" onclick="toggleSidebar()">
                 <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div class="header-row">
-                <button class="hamburger-btn" onclick="toggleMenu()">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-                <div class="main-menu-pill">MENU UTAMA</div>
-                <div class="spacer"></div>
             </div>
         </div>
 
-        <!-- Grid Content -->
-        <div class="content-scroll">
+        <a href="index.html" class="nav-item">
+            <div class="nav-icon-box"><i class="fa-solid fa-house"></i></div>
+            <span>Home</span>
+        </a>
+        <a href="menu_utama.html" class="nav-item">
+            <div class="nav-icon-box"><i class="fa-solid fa-table-cells-large"></i></div>
+            <span>Menu Utama</span>
+        </a>
+        <a href="download_data.html" class="nav-item">
+            <div class="nav-icon-box"><i class="fa-solid fa-cloud-arrow-down"></i></div>
+            <span>Unduh Data</span>
+        </a>
+        <a href="informasi_akun.html" class="nav-item">
+            <div class="nav-icon-box"><i class="fa-solid fa-user"></i></div>
+            <span>Akun</span>
+        </a>
+    </nav>
+
+    <!-- HEADER UTAMA (FIXED TOP) -->
+    <header class="main-header">
+        <div class="header-content-wrapper">
+            <!-- Hamburger Trigger -->
+            <div class="hamburger-menu" onclick="toggleSidebar()">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+
+            <!-- Title Pill (Centered) -->
+            <div class="header-title-pill">MENU UTAMA</div>
+
+            <!-- Close/Exit Button (Right) -->
+            <a href="index.html" class="close-app-btn" title="Keluar ke Home">
+                <i class="fa-solid fa-xmark"></i>
+            </a>
+        </div>
+    </header>
+
+    <div class="app-shell">
+        <div class="app-container">
             
-            <!-- HALAMAN 1 -->
-            <div id="page1" class="menu-grid active">
+            <!-- Grid Content -->
+            <div class="menu-grid">
                 
-                <!-- 1. Checklist Harian Mesin Injection -->
-                <div class="menu-item">
-                    <img src="https://cdn-icons-png.flaticon.com/512/4807/4807695.png" class="char-image" alt="Worker">
-                    <a href="checklist_injection.html" class="bottom-pill">Checklist Harian <br> Mesin Injection</a>
-                </div>
+                <!-- Item 1 -->
+                <a href="clhmi.html" class="menu-card">
+                    <div class="char-image-container">
+                        <img src="gambar_1.png" alt="Engineer" class="char-image">
+                    </div>
+                    <div class="menu-pill">
+                        <h2>Checklist Harian<br>mesin Injection</h2>
+                    </div>
+                </a>
 
-                <!-- 2. Checklist Harian Robot & Stand Label -->
-                <div class="menu-item">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3884/3884851.png" class="char-image" alt="Engineer">
-                    <a href="checklist_robot.html" class="bottom-pill">Checklist Harian <br> Robot & Stand Label</a>
-                </div>
+                <!-- Item 2 -->
+                <a href="chslr.html" class="menu-card">
+                    <div class="char-image-container">
+                        <img src="gambar_2.png" alt="Engineer" class="char-image">
+                    </div>
+                    <div class="menu-pill">
+                        <h2>Checklist Harian<br>stand label & robot</h2>
+                    </div>
+                </a>
 
-                <!-- 3. Pelaksanaan Pekerjaan Workshop -->
-                <div class="menu-item">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1650/1650365.png" class="char-image" alt="Workshop">
-                    <a href="pekerjaan_workshop.html" class="bottom-pill">Pelaksanaan <br> Pekerjaan Workshop</a>
-                </div>
+                <!-- Item 3 -->
+                <a href="ppw.html" class="menu-card">
+                    <div class="char-image-container">
+                        <img src="gambar_3.png" alt="Engineer" class="char-image">
+                    </div>
+                    <div class="menu-pill">
+                        <h2>Pelaksanaan<br>Pekerjaan Workshop</h2>
+                    </div>
+                </a>
 
-                <!-- 4. Laporan Kerja Maintenance & Repair -->
-                <div class="menu-item">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2040/2040946.png" class="char-image" alt="Maintenance">
-                    <a href="laporan_maintenance.html" class="bottom-pill">Laporan Kerja <br> Maint. & Repair</a>
-                </div>
+                <!-- Item 4 -->
+                <a href="Lkmr.html" class="menu-card">
+                    <div class="char-image-container">
+                        <img src="gambar_4.png" alt="Engineer" class="char-image">
+                    </div>
+                    <div class="menu-pill">
+                        <h2>Laporan kerja<br>Maintenance & Repair</h2>
+                    </div>
+                </a>
 
-            </div>
+                <!-- Item 5 -->
+                <a href="pmi.html" class="menu-card">
+                    <div class="char-image-container">
+                        <img src="gambar_5.png" alt="Engineer" class="char-image">
+                    </div>
+                    <div class="menu-pill">
+                        <h2>Preventif mesin<br>injection (clamping)</h2>
+                    </div>
+                </a>
 
-            <!-- HALAMAN 2 -->
-            <div id="page2" class="menu-grid">
-                
-                <!-- 5. Preventif Bulanan Mesin Injection -->
-                <div class="menu-item">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3048/3048122.png" class="char-image" alt="Mesin Injection">
-                    <a href="preventif_mesin.html" class="bottom-pill">Preventif Bulanan <br> Mesin Injection</a>
-                </div>
+                <!-- Item 6 -->
+                <a href="prslb.html" class="menu-card">
+                    <div class="char-image-container">
+                        <img src="gambar_6.png" alt="Engineer" class="char-image">
+                    </div>
+                    <div class="menu-pill">
+                        <h2>Preventif Robot<br>& Stand Label</h2>
+                    </div>
+                </a>
 
-                <!-- 6. Preventif Bulanan Robot & Label -->
-                <div class="menu-item">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3884/3884865.png" class="char-image" alt="Preventif Robot">
-                    <a href="preventif_robot.html" class="bottom-pill">Preventif Bulanan <br> Robot & Label</a>
-                </div>
+                <!-- Item 7 -->
+                <a href="pohm.html" class="menu-card">
+                    <div class="char-image-container">
+                        <img src="gambar_7.png" alt="Engineer" class="char-image">
+                    </div>
+                    <div class="menu-pill">
+                        <h2>Laporan perawatan<br>& overhaul tools</h2>
+                    </div>
+                </a>
 
-                <!-- 7. Form Laporan Perawatan & Overhaul -->
-                <div class="menu-item">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1995/1995470.png" class="char-image" alt="Overhaul">
-                    <a href="form_overhaul.html" class="bottom-pill">Form Laporan <br> Perawatan & Overhaul</a>
-                </div>
+                <!-- Item 8 -->
+                <a href="clpm.html" class="menu-card">
+                    <div class="char-image-container">
+                        <img src="gambar_8.png" alt="Engineer" class="char-image">
+                    </div>
+                    <div class="menu-pill">
+                        <h2>Checklist<br>perawatan mold</h2>
+                    </div>
+                </a>
 
-                <!-- 8. Checklist Perawatan Mold -->
-                <div class="menu-item">
-                    <img src="https://cdn-icons-png.flaticon.com/512/4661/4661334.png" class="char-image" alt="Mold">
-                    <a href="perawatan_mold.html" class="bottom-pill">Checklist <br> Perawatan Mold</a>
-                </div>
+                <!-- Item 9 -->
+                <a href="Jpdo.html" class="menu-card">
+                    <div class="char-image-container">
+                        <img src="gambar_9.png" alt="Engineer" class="char-image">
+                    </div>
+                    <div class="menu-pill">
+                        <h2>Jadwal perawatan<br>dan overhaul</h2>
+                    </div>
+                </a>
 
-            </div>
-
-             <!-- HALAMAN 3 -->
-             <div id="page3" class="menu-grid">
-                
-                <!-- 9. Jadwal Perawatan Dan Overhaul -->
-                <div class="menu-item">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2829/2829827.png" class="char-image" alt="Jadwal">
-                    <a href="jadwal_perawatan.html" class="bottom-pill">Jadwal Perawatan <br> Dan Overhaul</a>
-                </div>
-
-                <!-- 10. Kartu Riwayat Mesin -->
-                <div class="menu-item">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2641/2641409.png" class="char-image" alt="Kartu Riwayat">
-                    <a href="kartu_riwayat.html" class="bottom-pill">Kartu Riwayat <br> Mesin</a>
-                </div>
+                 <!-- Item 10 -->
+                 <a href="kartu_riwayat.html" class="menu-card">
+                    <div class="char-image-container">
+                        <img src="gambar_10.png" alt="Engineer" class="char-image">
+                    </div>
+                    <div class="menu-pill">
+                        <h2>Kartu<br>Riwayat</h2>
+                    </div>
+                </a>
 
             </div>
 
         </div>
-
-        <!-- Floating Widget -->
-        <div class="floating-widget"></div>
-
-        <!-- Pagination -->
-        <div class="pagination-container">
-            <div class="page-circle active" id="btnPage1" onclick="switchPage(1)">1</div>
-            <div class="page-circle" id="btnPage2" onclick="switchPage(2)">2</div>
-            <div class="page-circle" id="btnPage3" onclick="switchPage(3)">3</div>
-        </div>
-
     </div>
 
+    <!-- SCRIPT UNTUK TOGGLE MENU -->
     <script>
-        function toggleMenu() {
-            document.getElementById('sidebar').classList.toggle('active');
-            document.getElementById('sidebarOverlay').classList.toggle('active');
-        }
-
-        function switchPage(pageNum) {
-            // Hide all pages
-            document.getElementById('page1').classList.remove('active');
-            document.getElementById('page2').classList.remove('active');
-            document.getElementById('page3').classList.remove('active');
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
             
-            // Deactivate bullets
-            document.getElementById('btnPage1').classList.remove('active');
-            document.getElementById('btnPage2').classList.remove('active');
-            document.getElementById('btnPage3').classList.remove('active');
-
-            // Activate requested page
-            document.getElementById('page' + pageNum).classList.add('active');
-            document.getElementById('btnPage' + pageNum).classList.add('active');
-
-            // Scroll to top slowly
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
         }
     </script>
+
 </body>
 </html>
