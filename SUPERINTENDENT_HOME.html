@@ -149,7 +149,8 @@
         }
 
         .description-box {
-            margin-bottom: 30px;
+            width: 100%;
+            z-index: 2; /* Memastikan teks di atas elemen lain */
         }
 
         .description-box p {
@@ -314,19 +315,19 @@
             
             <div class="content-wrapper">
                 
+                <!-- Teks Deskripsi (Atas Logo) -->
+                <div class="description-box">
+                    <p>Solusi digital untuk monitoring dan perawatan mesin agar operasional tetap optimal dan efisien.</p>
+                </div>
+
                 <!-- Gambar (Tengah) -->
                 <div class="illustration-side">
                     <div class="illustration-bg"></div>
                     <img src="logo akg.png" alt="PT AKG Maintenance">
                 </div>
 
-                <!-- Teks & Tombol (Tengah Bawah) -->
+                <!-- Tombol (Bawah) -->
                 <div class="text-side">
-                    
-                    <div class="description-box">
-                        <p>Solusi digital terintegrasi untuk pemantauan kondisi mesin, pelaporan kerusakan, dan manajemen perawatan agar operasional pabrik tetap optimal.</p>
-                    </div>
-
                     <div class="action-area">
                         <a href="MENU_UTAMA_SUPERINTENDENT.html" class="btn btn-mulai">
                             <i class="fa-solid fa-rocket"></i> Mulai Akses
